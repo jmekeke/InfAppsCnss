@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommunicationInterne.Domain\CommunicationInterne.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\..\cnss-metier\src\Shared\Cnss.Metier.Shared.Application\Cnss.Metier.Shared.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.*" />
+    <PackageReference Include="MDiator" Version="*" />
+  </ItemGroup>
+</Project>

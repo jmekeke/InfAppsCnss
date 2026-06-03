@@ -1,0 +1,15 @@
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\bin\Debug\net10.0\CommunicationInterne.Domain.deps.json
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\bin\Debug\net10.0\CommunicationInterne.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\bin\Debug\net10.0\CommunicationInterne.Domain.pdb
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.csproj.AssemblyReference.cache
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.GeneratedMSBuildEditorConfig.editorconfig
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.AssemblyInfoInputs.cache
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.AssemblyInfo.cs
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.csproj.CoreCompileInputs.cache
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\Communic.F78A6065.Up2Date
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\refint\CommunicationInterne.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\CommunicationInterne.Domain.pdb
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\obj\Debug\net10.0\ref\CommunicationInterne.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Domain\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.pdb

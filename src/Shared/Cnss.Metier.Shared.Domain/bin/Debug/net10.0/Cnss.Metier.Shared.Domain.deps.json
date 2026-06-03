@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Cnss.Metier.Shared.Domain/1.0.0": {
+        "runtime": {
+          "Cnss.Metier.Shared.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Cnss.Metier.Shared.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

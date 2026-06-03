@@ -1,0 +1,11 @@
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.deps.json
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.pdb
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.GeneratedMSBuildEditorConfig.editorconfig
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.AssemblyInfoInputs.cache
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.AssemblyInfo.cs
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.csproj.CoreCompileInputs.cache
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\refint\Cnss.Metier.Shared.Domain.dll
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\Cnss.Metier.Shared.Domain.pdb
+d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\Shared\Cnss.Metier.Shared.Domain\obj\Debug\net10.0\ref\Cnss.Metier.Shared.Domain.dll
