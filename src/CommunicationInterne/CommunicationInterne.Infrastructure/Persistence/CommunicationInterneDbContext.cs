@@ -1,4 +1,5 @@
 using Cnss.Metier.CommunicationInterne.Domain.Aggregats;
+using Cnss.Metier.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence;
@@ -18,6 +19,11 @@ public sealed class CommunicationInterneDbContext : DbContext
     public DbSet<MembreGroupe> MembresGroupe => Set<MembreGroupe>();
     public DbSet<DossierDiffusion> DossiersDiffusion => Set<DossierDiffusion>();
     public DbSet<LigneDiffusion> LignesDiffusion => Set<LigneDiffusion>();
+    public DbSet<PieceJointe> PiecesJointes => Set<PieceJointe>();
+    public DbSet<DestinataireCible> DestinatairesMessages => Set<DestinataireCible>();
+    public DbSet<HistoriqueAction> HistoriqueActions => Set<HistoriqueAction>();
+    public DbSet<VoieCommunication>  VoiesCommunication  => Set<VoieCommunication>();
+    public DbSet<HistoriqueVoie>     HistoriquesVoie     => Set<HistoriqueVoie>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

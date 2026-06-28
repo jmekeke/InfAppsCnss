@@ -1,0 +1,308 @@
+2026-06-13 16:43:32.860 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 16:43:32.935 +01:00 [ERR] Microsoft.Extensions.Hosting.Internal.Host Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5100: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Une seule utilisation de chaque adresse de socket (protocole/adresse réseau/port) est habituellement autorisée.
+ ---> System.Net.Sockets.SocketException (10048): Une seule utilisation de chaque adresse de socket (protocole/adresse réseau/port) est habituellement autorisée.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-13 16:43:32.952 +01:00 [FTL]  Application terminated unexpectedly
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5100: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Une seule utilisation de chaque adresse de socket (protocole/adresse réseau/port) est habituellement autorisée.
+ ---> System.Net.Sockets.SocketException (10048): Une seule utilisation de chaque adresse de socket (protocole/adresse réseau/port) est habituellement autorisée.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at Program.<Main>$(String[] args) in D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api\Program.cs:line 152
+2026-06-13 16:44:19.762 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 16:44:19.832 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5100
+2026-06-13 16:44:19.834 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 16:44:19.834 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 16:44:19.835 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 16:44:19.835 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-13 16:44:38.104 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-13 16:44:38.555 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/3465 responded 200 in 445.2771 ms
+2026-06-13 16:44:44.966 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/3467 responded 200 in 9.1859 ms
+2026-06-13 16:48:53.582 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/3467 responded 404 in 2.9072 ms
+2026-06-13 16:49:06.878 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/3467 responded 200 in 42.1787 ms
+2026-06-13 16:49:19.320 +01:00 [WRN]  JWT auth failed: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2026-06-13 16:49:19.327 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/3467 responded 404 in 8.4439 ms
+2026-06-13 16:50:24.046 +01:00 [WRN]  JWT auth failed: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2026-06-13 16:50:24.048 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/3467 responded 404 in 1.8954 ms
+2026-06-13 16:51:14.762 +01:00 [WRN]  JWT auth failed: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2026-06-13 16:51:14.764 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/3467/a1000000-0000-0000-0000-000000000004 responded 404 in 1.8018 ms
+2026-06-13 16:57:47.301 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 16:57:47.377 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5100
+2026-06-13 16:57:47.379 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 16:57:47.380 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 16:57:47.380 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 16:57:47.381 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-13 16:58:34.155 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-13 16:58:35.581 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (48ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 16:58:35.774 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO communication_interne."MembresGroupe" ("AgentId", "GroupeDiffusionId", "DateAjout")
+VALUES (@p0, @p1, @p2);
+2026-06-13 16:58:35.815 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/membres/3467 responded 200 in 1655.1445 ms
+2026-06-13 17:00:40.455 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/3465 responded 200 in 243.2264 ms
+2026-06-13 17:00:58.206 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:00:58.222 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (10ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO communication_interne."MembresGroupe" ("AgentId", "GroupeDiffusionId", "DateAjout")
+VALUES (@p0, @p1, @p2);
+2026-06-13 17:00:58.225 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/membres/3465 responded 200 in 86.0041 ms
+2026-06-13 17:07:24.810 +01:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-06-13 17:07:24.811 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopping
+2026-06-13 17:07:24.816 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopped
+2026-06-13 17:22:26.807 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 17:22:26.876 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5100
+2026-06-13 17:22:26.878 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 17:22:26.878 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 17:22:26.879 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 17:22:26.879 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-13 17:22:40.319 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-13 17:22:41.620 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-13 17:22:41.751 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (11ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+FROM communication_interne."Groupes" AS g
+ORDER BY g."Nom"
+LIMIT @p1 OFFSET @p
+2026-06-13 17:22:41.859 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:41.917 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:41.921 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:42.151 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:42.157 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:42.160 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:22:42.214 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion/membres-enrichis responded 200 in 1889.4371 ms
+2026-06-13 17:24:55.961 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:24:55.984 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/membres/3465 responded 200 in 99.1154 ms
+2026-06-13 17:32:46.459 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:32:46.568 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO communication_interne."MembresGroupe" ("AgentId", "GroupeDiffusionId", "DateAjout")
+VALUES (@p0, @p1, @p2);
+2026-06-13 17:32:46.584 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000001/membres/2994 responded 200 in 183.8067 ms
+2026-06-13 17:33:00.961 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:33:00.973 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO communication_interne."MembresGroupe" ("AgentId", "GroupeDiffusionId", "DateAjout")
+VALUES (@p0, @p1, @p2);
+2026-06-13 17:33:00.975 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000002/membres/2994 responded 200 in 18.4122 ms
+2026-06-13 17:33:12.761 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:33:12.773 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO communication_interne."MembresGroupe" ("AgentId", "GroupeDiffusionId", "DateAjout")
+VALUES (@p0, @p1, @p2);
+2026-06-13 17:33:12.775 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/groupes-diffusion/a1000000-0000-0000-0000-000000000003/membres/2994 responded 200 in 19.5622 ms
+2026-06-13 17:34:49.440 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:34:49.468 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion/a1000000-0000-0000-0000-000000000004/membres/3465 responded 200 in 30.7765 ms
+2026-06-13 17:38:28.404 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    WHERE g."Id" = @id
+    LIMIT 1
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Id", m."GroupeDiffusionId"
+2026-06-13 17:38:28.427 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion/a1000000-0000-0000-0000-000000000001/membres/2994 responded 200 in 53.8964 ms
+2026-06-13 18:43:21.955 +01:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-06-13 18:43:21.956 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopping
+2026-06-13 18:43:21.981 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopped
+2026-06-13 19:44:53.237 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 19:44:53.339 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5100
+2026-06-13 19:44:53.341 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 19:44:53.342 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 19:44:53.343 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 19:44:53.344 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-13 19:48:09.719 +01:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-06-13 19:48:09.720 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopping
+2026-06-13 19:48:09.744 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopped
+2026-06-13 19:50:21.250 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 19:50:21.359 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5500
+2026-06-13 19:50:21.362 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 19:50:21.362 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 19:50:21.363 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 19:50:21.364 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-13 20:24:56.985 +01:00 [INF] Microsoft.Hosting.Lifetime Application is shutting down...
+2026-06-13 20:24:56.986 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopping
+2026-06-13 20:24:56.993 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting stopped
+2026-06-13 20:25:04.800 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-13 20:25:04.903 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5500
+2026-06-13 20:25:04.905 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-13 20:25:04.905 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-13 20:25:04.906 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-13 20:25:04.906 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started

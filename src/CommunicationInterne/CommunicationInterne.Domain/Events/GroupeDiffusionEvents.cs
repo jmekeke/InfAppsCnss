@@ -7,3 +7,5 @@ public sealed record GroupeDiffusionCreeEvent(Guid GroupeId, string Nom) : Domai
 public sealed record MembreAjouteAuGroupeEvent(Guid GroupeId, Guid AgentId) : DomainEvent;
 
 public sealed record MembreRetireDeGroupeEvent(Guid GroupeId, Guid AgentId) : DomainEvent;
+
+public sealed record GroupeDiffusionSupprimeEvent(Guid GroupeId) : DomainEvent;

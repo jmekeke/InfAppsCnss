@@ -1,4 +1,5 @@
 using MDiator;
+using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Cnss.Metier.CommunicationInterne.Domain.Repositories;
 using Cnss.Metier.Shared.Application.Abstractions;
 using Cnss.Metier.Shared.Domain.Common;
@@ -13,10 +14,13 @@ public record RetirerMembreGroupeCommand(
 
 public class RetirerMembreGroupeHandler(
     IGroupeDiffusionRepository groupeRepo,
-    IUnitOfWork uow) : IMDiatorHandler<RetirerMembreGroupeCommand, Result>
+    IUnitOfWork uow,
+    ICurrentUserContext currentUser) : IMDiatorHandler<RetirerMembreGroupeCommand, Result>
 {
     public async Task<Result> Handle(RetirerMembreGroupeCommand cmd, CancellationToken ct)
     {
+        currentUser.SetUser(cmd.UserId, cmd.UserName);
+
         var groupe = await groupeRepo.GetWithMembresAsync(cmd.GroupeId, ct);
         if (groupe is null)
             return Result.NotFound();

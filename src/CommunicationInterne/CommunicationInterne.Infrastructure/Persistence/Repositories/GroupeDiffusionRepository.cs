@@ -21,10 +21,10 @@ internal sealed class GroupeDiffusionRepository(CommunicationInterneDbContext db
         if (page < 1) page = 1;
         if (pageSize is < 1 or > 200) pageSize = 20;
 
-        var query = db.Groupes.AsNoTracking();
+        var query = db.Groupes.Include(g => g.Membres).AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(search))
-            query = query.Where(g => g.Nom.Contains(search));
+            query = query.Where(g => EF.Functions.ILike(g.Nom, $"%{search}%"));
 
         var total = await query.CountAsync(ct);
         var items = await query

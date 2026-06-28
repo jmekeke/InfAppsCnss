@@ -1,0 +1,130 @@
+<!-- Page Tableau de bord -->
+<div class="dashboard">
+
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Tableau de bord</h2>
+      <p class="page-subtitle text-muted">Bienvenue, {{ auth.currentUser()?.name }}</p>
+    </div>
+    <a routerLink="/messages/nouveau" class="btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Nouveau message
+    </a>
+  </div>
+
+  <!-- Chargement -->
+  @if (loading()) {
+    <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div>
+  }
+
+  <!-- Erreur -->
+  @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  }
+
+  @if (!loading()) {
+
+    <!-- ── Compteurs ─────────────────────────────────────────────────────── -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total messages</div>
+        <div class="stat-value">{{ totalMessages() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Brouillons</div>
+        <div class="stat-value" style="color:var(--status-brouillon);">{{ countBrouillon() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">En attente validation</div>
+        <div class="stat-value" style="color:var(--status-attente);">{{ countAttente() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Validés</div>
+        <div class="stat-value" style="color:var(--status-valide);">{{ countValide() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Diffusés</div>
+        <div class="stat-value" style="color:var(--status-diffuse);">{{ countDiffuse() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Groupes de diffusion</div>
+        <div class="stat-value">{{ totalGroupes() }}</div>
+      </div>
+    </div>
+
+    <!-- ── Derniers messages ─────────────────────────────────────────────── -->
+    <div class="card" style="margin-top:1.5rem;">
+      <div class="card-header">
+        <h3 class="card-title">Derniers messages</h3>
+        <a routerLink="/messages" class="btn-action">Voir tous</a>
+      </div>
+
+      @if (messages().length === 0) {
+        <div class="empty-state">Aucun message pour le moment.</div>
+      } @else {
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Objet</th>
+              <th>Statut</th>
+              <th>Auteur</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (msg of messages(); track msg.id) {
+              <tr>
+                <td>
+                  <span style="font-weight:500;">{{ msg.objet }}</span>
+                  @if (msg.estInstitutionnel) {
+                    <span class="badge badge-valide" style="margin-left:.5rem;font-size:.7rem;">Institutionnel</span>
+                  }
+                </td>
+                <td><span [class]="badgeClass(msg.statut)">{{ statutLabel(msg.statut) }}</span></td>
+                <td class="text-muted">{{ msg.auteurNom }}</td>
+                <td class="text-muted">{{ formatDate(msg.dateCreation) }}</td>
+                <td>
+                  <a [routerLink]="['/messages', msg.id]" class="btn-action">Détail</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <!-- ── Actions rapides ───────────────────────────────────────────────── -->
+    <div class="quick-actions">
+      <a routerLink="/messages" class="quick-card">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Gérer les messages</span>
+      </a>
+      <a routerLink="/groupes" class="quick-card">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span>Groupes de diffusion</span>
+      </a>
+      <a routerLink="/messages/nouveau" class="quick-card">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        <span>Rédiger un message</span>
+      </a>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,281 @@
+<!-- Page Liste des groupes de diffusion -->
+<div>
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Groupes de diffusion</h2>
+      <p class="text-muted" style="margin:0;font-size:.9rem;">{{ totalCount() }} groupe(s)</p>
+    </div>
+    <button class="btn-primary" (click)="showModalCreer.set(true)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Nouveau groupe
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="list-toolbar">
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" [(ngModel)]="search" (keyup.enter)="onSearch()" placeholder="Rechercher un groupe..." />
+      </div>
+      <button type="button" class="btn-secondary" (click)="onSearch()">Rechercher</button>
+    </div>
+
+    @if (loading()) { <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div> }
+    @if (error()) { <div class="error-banner">{{ error() }}</div> }
+
+    @if (!loading()) {
+      @if (groupes().length === 0) {
+        <div class="empty-state">Aucun groupe de diffusion trouvé.</div>
+      } @else {
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Membres</th>
+                <th>Date création</th>
+                <th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (g of groupes(); track g.id) {
+                <tr>
+                  <td>
+                    <div class="td-name" [title]="g.nom">{{ g.nom }}</div>
+                    @if (g.description) {
+                      <div class="td-trunc" style="font-size:.8rem;" [title]="g.description">{{ g.description }}</div>
+                    }
+                  </td>
+                  <td>
+                    <span class="badge" [class]="g.type === 'Manuel' ? 'badge-brouillon' : 'badge-diffuse'">
+                      {{ g.type }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (g.type === 'Dynamique') {
+                      <span class="membres-live">
+                        {{ agentsLoading() ? '...' : (membresEffectifsMap().get(g.id) ?? 0) }}
+                        <span class="membres-live-badge" title="Effectif calculé en temps réel depuis la base RH">RH</span>
+                      </span>
+                    } @else {
+                      {{ g.nombreMembres }}
+                    }
+                  </td>
+                  <td class="td-trunc" [title]="formatDate(g.dateCreation)">{{ formatDate(g.dateCreation) }}</td>
+                  <td class="td-actions">
+                    <button class="btn-row btn-voir" type="button" (click)="ouvrirVoir(g)">Voir</button>
+                    <a [routerLink]="['/groupes', g.id]" class="btn-row btn-membres">Membres</a>
+                    <button class="btn-row" [class.btn-desactiver]="g.estActif" [class.btn-activer]="!g.estActif"
+                            type="button"
+                            [disabled]="toggleLoading() === g.id"
+                            (click)="basculerEtat(g)">
+                      {{ g.estActif ? 'Désactiver' : 'Activer' }}
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button class="page-btn page-prev" type="button" (click)="pagePrecedente()" [disabled]="page <= 1">‹</button>
+          <span class="page-summary">Page {{ page }} / {{ totalPages }}</span>
+          <button class="page-btn page-next" type="button" (click)="pageSuivante()" [disabled]="page >= totalPages">›</button>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Modale : Voir / Modifier un groupe -->
+  @if (showModalVoir()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Modifier le groupe</h3>
+        <div class="form-group">
+          <label>Nom <span style="color:#dc2626;">*</span></label>
+          <input type="text" [(ngModel)]="editNom" class="form-control" placeholder="Nom du groupe" />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" [(ngModel)]="editDescription" class="form-control" placeholder="Description (optionnelle)" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select [(ngModel)]="editType" class="form-control">
+            <option value="Manuel">Manuel — membres ajoutés manuellement</option>
+            <option value="Dynamique">Dynamique — membres selon critères RH</option>
+          </select>
+        </div>
+
+        @if (editType === 'Dynamique') {
+          <div class="criteres-dynamiques">
+            <div class="criteres-header">
+              <span>Ajouter des membres par critère</span>
+              <span class="criteres-count" [class.has-match]="agentsCorrespondants().length > 0">
+                {{ agentsCorrespondants().length }} agent(s)
+              </span>
+            </div>
+            <p class="criteres-hint">Sélectionnez <strong>un seul</strong> grade ou entité pour ajouter les agents correspondants comme membres.</p>
+
+            <div class="critere-section">
+              <div class="critere-section-title">Par grade</div>
+              <div class="critere-radio-list">
+                @for (grade of gradesDistincts(); track grade) {
+                  <button type="button" class="critere-radio" [class.actif]="isCritereActif('grade', grade)"
+                          (click)="selectionnerCritere('grade', grade)">
+                    @if (isCritereActif('grade', grade)) {
+                      <span class="critere-radio-dot"></span>
+                    }
+                    {{ grade }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="critere-section" style="margin-top:.6rem;">
+              <div class="critere-section-title">Par entité / direction</div>
+              <div class="critere-radio-list">
+                @for (entite of entitesDistinctes(); track entite) {
+                  <button type="button" class="critere-radio" [class.actif]="isCritereActif('entite', entite)"
+                          (click)="selectionnerCritere('entite', entite)">
+                    @if (isCritereActif('entite', entite)) {
+                      <span class="critere-radio-dot"></span>
+                    }
+                    {{ entite }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <button type="button" class="btn-secondary" style="margin-top:.85rem;width:100%;"
+                    [disabled]="!critereSelectionne"
+                    (click)="critereSelectionne = null">
+              Effacer la sélection
+            </button>
+          </div>
+        }
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label style="color:#6b7280;font-size:.8rem;">Membres actuels</label>
+          <p style="margin:.25rem 0 0;font-weight:600;">
+            @if (groupeEnEdition?.type === 'Dynamique') {
+              {{ agentsLoading() ? 'Calcul...' : (membresEffectifsMap().get(groupeEnEdition!.id) ?? 0) }}
+              <span style="font-size:.75rem;font-weight:400;color:#0e7490;margin-left:.4rem;">(calculé en temps réel depuis RH)</span>
+            } @else {
+              {{ groupeEnEdition?.nombreMembres ?? 0 }} membre(s)
+            }
+          </p>
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="fermerModales()">Annuler</button>
+          <a [routerLink]="['/groupes', groupeEnEdition?.id]" class="btn-action" (click)="fermerModales()">Gérer les membres</a>
+          <button class="btn-primary" (click)="enregistrerModification()" [disabled]="actionLoading()">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modale : Créer un groupe -->
+  @if (showModalCreer()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Nouveau groupe de diffusion</h3>
+        <div class="form-group">
+          <label>Nom <span style="color:#dc2626;">*</span></label>
+          @if (typeGroupe === 'Manuel') {
+            <input type="text" [(ngModel)]="nomGroupe" class="form-control" placeholder="Ex: Direction Générale" />
+          } @else {
+            <div class="form-control" style="background:#f3f4f6;color:#374151;font-weight:600;cursor:default;">
+              {{ nomGroupe || '— sera défini par le critère sélectionné —' }}
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <label>Description (optionnelle)</label>
+          <input type="text" [(ngModel)]="descriptionGroupe" class="form-control" placeholder="Description du groupe..." />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select [(ngModel)]="typeGroupe" class="form-control">
+            <option value="Manuel">Manuel — membres ajoutés manuellement</option>
+            <option value="Dynamique">Dynamique — membres selon critères RH</option>
+          </select>
+        </div>
+
+        @if (typeGroupe === 'Dynamique') {
+          <div class="criteres-dynamiques">
+            <div class="criteres-header">
+              <span>Sélectionner un critère</span>
+              @if (agentsLoading()) {
+                <span class="text-muted" style="font-size:.78rem;">Chargement...</span>
+              } @else {
+                <span class="criteres-count" [class.has-match]="agentsCorrespondants().length > 0">
+                  {{ agentsCorrespondants().length }} agent(s)
+                </span>
+              }
+            </div>
+            <p class="criteres-hint">Choisissez <strong>un seul</strong> grade ou entité. Le nom du groupe sera celui du critère, et tous les agents correspondants seront ajoutés comme membres.</p>
+
+            <div class="critere-section">
+              <div class="critere-section-title">Par grade</div>
+              <div class="critere-radio-list">
+                @for (grade of gradesDistincts(); track grade) {
+                  <button type="button" class="critere-radio" [class.actif]="isCritereActif('grade', grade)"
+                          (click)="selectionnerCritere('grade', grade)">
+                    @if (isCritereActif('grade', grade)) {
+                      <span class="critere-radio-dot"></span>
+                    }
+                    {{ grade }}
+                  </button>
+                }
+                @if (gradesDistincts().length === 0 && !agentsLoading()) {
+                  <span class="text-muted" style="font-size:.78rem;">Aucun grade disponible</span>
+                }
+              </div>
+            </div>
+
+            <div class="critere-section" style="margin-top:.6rem;">
+              <div class="critere-section-title">Par entité / direction</div>
+              <div class="critere-radio-list">
+                @for (entite of entitesDistinctes(); track entite) {
+                  <button type="button" class="critere-radio" [class.actif]="isCritereActif('entite', entite)"
+                          (click)="selectionnerCritere('entite', entite)">
+                    @if (isCritereActif('entite', entite)) {
+                      <span class="critere-radio-dot"></span>
+                    }
+                    {{ entite }}
+                  </button>
+                }
+                @if (entitesDistinctes().length === 0 && !agentsLoading()) {
+                  <span class="text-muted" style="font-size:.78rem;">Aucune entité disponible</span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" (click)="creer()" [disabled]="actionLoading()">
+            @if (actionLoading()) { <span class="spinner" style="width:13px;height:13px;border-width:2px;"></span> }
+            @if (typeGroupe === 'Dynamique' && agentsCorrespondants().length > 0) {
+              Créer + ajouter {{ agentsCorrespondants().length }} membres
+            } @else {
+              Créer
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

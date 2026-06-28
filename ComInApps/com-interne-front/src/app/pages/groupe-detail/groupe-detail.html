@@ -1,0 +1,183 @@
+<!-- Page Détail d'un groupe de diffusion -->
+<div class="liste-container">
+  <a routerLink="/groupes" class="btn-secondary" style="display:inline-flex;margin-bottom:1rem;">
+    ← Retour aux groupes
+  </a>
+
+  @if (loading()) { <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div> }
+  @if (error()) { <div class="error-banner">{{ error() }}</div> }
+
+  @if (groupe(); as g) {
+    <!-- En-tête -->
+    <div class="card" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <h2 style="font-size:1.3rem;font-weight:700;margin:0 0 .35rem;">{{ g.nom }}</h2>
+          @if (g.description) {
+            <p class="text-muted" style="margin:0;font-size:.9rem;">{{ g.description }}</p>
+          }
+          <div style="margin-top:.5rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+            <span class="badge" [class]="g.type === 'Manuel' ? 'badge-brouillon' : 'badge-diffuse'">{{ g.type }}</span>
+            <span class="text-muted" style="font-size:.875rem;">{{ membresAffiches().length }} membre(s)</span>
+            @if (isGroupeDynamique()) {
+              <span class="badge badge-diffuse" style="font-size:.7rem;" title="Membres calculés en temps réel depuis la base RH">RH temps réel</span>
+            }
+          </div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          @if (!isGroupeDynamique()) {
+            <button class="btn-secondary" (click)="showModalManuel.set(true)">+ Membre manuel</button>
+            <button class="btn-primary" (click)="showModalRh.set(true)">+ Agent RH</button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des membres -->
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom:1rem;">Membres du groupe</h3>
+      @if (membresAffiches().length === 0) {
+        <div class="empty-state">Ce groupe n'a pas encore de membres.</div>
+      } @else {
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Matricule</th>
+                <th>Nom complet</th>
+                <th>Entité</th>
+                <th>Grade</th>
+                <th>Fonction</th>
+                <th>Email professionnel</th>
+                <th>Téléphone</th>
+                <th>Source</th>
+                <th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of pageCourante(); track row.key) {
+                <tr>
+                  <td><span class="matricule-chip">{{ matriculeAffiche(row) }}</span></td>
+                  <td class="td-name" [title]="nomAffiche(row)">{{ nomAffiche(row) }}</td>
+                  <td class="td-trunc" [title]="entiteAffiche(row)">{{ entiteAffiche(row) }}</td>
+                  <td class="td-trunc" [title]="gradeAffiche(row)">{{ gradeAffiche(row) }}</td>
+                  <td class="td-trunc" [title]="fonctionAffiche(row)">{{ fonctionAffiche(row) }}</td>
+                  <td class="td-contact">
+                    @if (emailAffiche(row) !== '—') {
+                      <a [href]="'mailto:' + emailAffiche(row)" class="contact-link" [title]="emailAffiche(row)">{{ emailAffiche(row) }}</a>
+                    } @else {
+                      <span class="text-muted">—</span>
+                    }
+                  </td>
+                  <td class="td-contact">
+                    @if (telephoneAffiche(row) !== '—') {
+                      <a [href]="'tel:' + telephoneAffiche(row)" class="contact-link">{{ telephoneAffiche(row) }}</a>
+                    } @else {
+                      <span class="text-muted">—</span>
+                    }
+                  </td>
+                  <td>
+                    @if (row.source === 'Base RH') {
+                      <span class="badge badge-diffuse" style="font-size:.7rem;">Base RH</span>
+                    } @else {
+                      <span class="badge badge-brouillon" style="font-size:.7rem;">Manuel</span>
+                    }
+                  </td>
+                  <td class="td-actions">
+                    @if (row.membre) {
+                      <button class="btn-row btn-retirer" type="button"
+                              [disabled]="actionLoading()"
+                              (click)="retirerMembre(row.membre)">Retirer</button>
+                    } @else {
+                      <span class="text-muted" style="font-size:.78rem;">Auto</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            <button class="page-btn page-prev" type="button"
+                    (click)="aller(currentPage() - 1)" [disabled]="currentPage() === 1" title="Précédent">‹</button>
+            @for (p of pageNumbers(); track p) {
+              @if (p === '…') {
+                <span class="page-dots">…</span>
+              } @else {
+                <button class="page-btn page-num" type="button"
+                        [class.page-active]="p === currentPage()"
+                        (click)="aller(p)">{{ p }}</button>
+              }
+            }
+            <button class="page-btn page-next" type="button"
+                    (click)="aller(currentPage() + 1)" [disabled]="currentPage() === totalPages()" title="Suivant">›</button>
+            <span class="page-summary">{{ (currentPage() - 1) * 20 + 1 }}–{{ pageFinActuelle() }} sur {{ membresAffiches().length }}</span>
+          </div>
+        }
+      }
+    </div>
+  }
+
+  <!-- Modale : Ajouter agent RH -->
+  @if (showModalRh()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Ajouter un agent depuis la base RH</h3>
+        <div class="form-group">
+          <label>Rechercher un agent</label>
+          <input type="search" [ngModel]="searchAgent()" (ngModelChange)="searchAgent.set($event)" class="form-control" placeholder="Nom, email..." />
+        </div>
+        <div style="margin-bottom:.5rem;font-size:.8rem;color:#6b7280;">
+          {{ selectedAgentIds().size }} agent(s) sélectionné(s)
+        </div>
+        <div class="agents-list">
+          @for (a of agentsFiltres(); track a.id) {
+            <label class="agent-item" [class.selected]="selectedAgentIds().has(a.id)">
+              <input type="checkbox"
+                     [checked]="selectedAgentIds().has(a.id)"
+                     (change)="toggleAgent(a.id)" />
+              <div>
+                <div style="font-weight:500;">{{ nomCompletAgent(a) }}</div>
+                <div class="text-muted" style="font-size:.8rem;">{{ a.entiteLibelle ?? '' }} — {{ a.emailProfessionnel ?? '' }}</div>
+              </div>
+            </label>
+          }
+          @if (agentsFiltres().length === 0) {
+            <div class="empty-state" style="padding:1rem;">Aucun agent trouvé.</div>
+          }
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" (click)="ajouterAgentRh()" [disabled]="actionLoading() || selectedAgentIds().size === 0">
+            Ajouter ({{ selectedAgentIds().size }})
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modale : Ajouter membre manuel -->
+  @if (showModalManuel()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Ajouter un membre manuellement</h3>
+        <div class="form-group">
+          <label>Nom complet <span style="color:#dc2626;">*</span></label>
+          <input type="text" [(ngModel)]="nomManuel" class="form-control" placeholder="Nom et prénom..." />
+        </div>
+        <div class="form-group">
+          <label>Email (optionnel)</label>
+          <input type="email" [(ngModel)]="emailManuel" class="form-control" placeholder="email@cnss.dz" />
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" (click)="ajouterManuel()" [disabled]="actionLoading()">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

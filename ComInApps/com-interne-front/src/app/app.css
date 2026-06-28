@@ -1,0 +1,106 @@
+/* ── App Shell Layout ───────────────────────────────────────────────────────── */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+/* Marque / Logo */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+.brand-accent {
+  color: var(--color-primary);
+}
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--color-border);
+}
+
+/* Navigation principale */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-item:hover        { background: var(--color-bg); color: var(--color-text); }
+.nav-item.active       { background: var(--color-primary-light); color: var(--color-primary); }
+
+/* Actions à droite dans le header */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.btn-logout {
+  height: 34px;
+  padding: 0 0.9rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.btn-logout:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+/* ── Contenu principal ───────────────────────────────────────────────────────── */
+.app-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}

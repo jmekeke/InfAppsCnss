@@ -1,0 +1,81 @@
+<!-- App Shell — structure générale de la page (header + contenu) -->
+<!-- Le header n'est affiché que lorsque l'utilisateur est authentifié -->
+
+<div class="app-shell">
+
+  @if (showHeader()) {
+  <!-- ── Header de navigation ───────────────────────────────────────────── -->
+  <header class="app-header">
+
+    <!-- Marque -->
+    <a routerLink="/dashboard" class="header-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+           fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="brand-name">CNSS<span class="brand-accent">&nbsp;Com Interne</span></span>
+    </a>
+
+    <div class="header-divider"></div>
+
+    <!-- Navigation principale -->
+    <nav class="header-nav">
+
+      <!-- Tableau de bord -->
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <span>Tableau de bord</span>
+      </a>
+
+      <!-- Messages internes -->
+      <a routerLink="/messages" routerLinkActive="active" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Messages</span>
+      </a>
+
+      <!-- Groupes de diffusion -->
+      <a routerLink="/groupes" routerLinkActive="active" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span>Groupes</span>
+      </a>
+
+      <!-- Membres / Agents RH -->
+      <a routerLink="/membres" routerLinkActive="active" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Membres</span>
+      </a>
+
+    </nav>
+
+    <!-- Actions utilisateur -->
+    <div class="header-actions">
+      <span class="user-name">{{ userName() }}</span>
+      <button class="btn-logout" (click)="logout()">Déconnexion</button>
+    </div>
+
+  </header>
+  }
+
+  <!-- ── Contenu de la page active (router-outlet) ──────────────────────── -->
+  <main class="app-content">
+    <router-outlet />
+  </main>
+
+</div>

@@ -1,0 +1,430 @@
+﻿<!-- Page Détail d'un message -->
+<div>
+
+  <a routerLink="/messages" class="btn-secondary" style="display:inline-flex;margin-bottom:1rem;">
+    ← Retour à la liste
+  </a>
+
+  @if (loading()) {
+    <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div>
+  }
+  @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  }
+
+  @if (message(); as msg) {
+
+    <!-- ── En-tête ──────────────────────────────────────────────────────── -->
+    <div class="msg-header card">
+      <div class="msg-header-top">
+        <div>
+          <h2 class="msg-objet">{{ msg.objet }}</h2>
+          <div class="msg-meta">
+            <span [class]="badgeClass(msg.statut)">{{ statutLabel(msg.statut) }}</span>
+            @if (msg.estInstitutionnel) { <span class="badge badge-valide">Institutionnel</span> }
+            <span class="text-muted">par {{ msg.auteurNom }}</span>
+            <span class="text-muted">·</span>
+            <span class="text-muted">{{ formatDate(msg.dateCreation) }}</span>
+          </div>
+        </div>
+
+        <!-- Boutons actions selon statut -->
+        <div class="action-buttons">
+          @if (msg.statut === 'Brouillon') {
+            <button class="btn-secondary" type="button" (click)="showPreview.set(!showPreview())">
+              {{ showPreview() ? 'Fermer aperçu' : 'Aperçu' }}
+            </button>
+            <a [routerLink]="['/messages', msg.id, 'modifier']" class="btn-secondary">Modifier</a>
+            <button class="btn-secondary" type="button" (click)="showModalDestinataires.set(true)">Destinataires</button>
+            <button class="btn-secondary" type="button" (click)="showModalPJ.set(true)">Pièces jointes</button>
+            <button class="btn-primary" type="button" (click)="showModalSoumettre.set(true)">Soumettre</button>
+            <button class="btn-danger"  type="button" (click)="showModalSupprimer.set(true)">Supprimer</button>
+          }
+          @if (msg.statut === 'EnAttenteValidation') {
+            <button class="btn-secondary" type="button" (click)="showModalDemandCorrection.set(true)">Demander correction</button>
+            <button class="btn-primary" type="button" (click)="showModalValider.set(true)">Valider</button>
+            <button class="btn-danger"  type="button" (click)="showModalRejeter.set(true)">Rejeter</button>
+          }
+          @if (msg.statut === 'Valide') {
+            <button class="btn-secondary" type="button" (click)="showModalDestinataires.set(true)">Destinataires</button>
+            <button class="btn-secondary" type="button" (click)="showModalProgrammer.set(true)">Programmer</button>
+            <button class="btn-primary"   type="button" (click)="showModalDiffuser.set(true)">Diffuser maintenant</button>
+          }
+          @if (msg.statut === 'Programme') {
+            <button class="btn-primary" type="button" (click)="showModalDiffuser.set(true)">Lancer maintenant</button>
+          }
+          @if (msg.statut === 'Diffuse') {
+            <a [routerLink]="['/dossiers', msg.id]" class="btn-action">Voir les dossiers</a>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Aperçu (prévisualisation) ────────────────────────────────────── -->
+    @if (showPreview()) {
+      <div class="card preview-card" style="margin-top:1rem;border:2px dashed #0e7490;">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;">
+          <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;color:#0e7490;letter-spacing:.05em;">Aperçu du message</span>
+        </div>
+        <div class="preview-header" style="background:#f0f9ff;padding:.75rem 1rem;border-radius:.4rem;margin-bottom:.75rem;">
+          <div style="font-size:.8rem;color:#6b7280;margin-bottom:.3rem;">
+            <strong>De :</strong> {{ msg.auteurNom }} &nbsp;|&nbsp;
+            <strong>Canaux :</strong> {{ msg.canaux.join(', ') }} &nbsp;|&nbsp;
+            <strong>Destinataires :</strong> {{ msg.destinataires.length }} cible(s)
+          </div>
+          <div style="font-size:1.05rem;font-weight:700;color:#111827;">{{ msg.objet }}</div>
+        </div>
+        <div style="line-height:1.7;white-space:pre-wrap;color:#374151;">{{ msg.corps }}</div>
+        @if (msg.piecesJointes.length > 0) {
+          <div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid #e5e7eb;">
+            <strong style="font-size:.8rem;color:#6b7280;">Pièces jointes ({{ msg.piecesJointes.length }})</strong>
+            <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem;">
+              @for (pj of msg.piecesJointes; track pj.id) {
+                <span style="font-size:.78rem;padding:.25rem .6rem;background:#f3f4f6;border-radius:.35rem;border:1px solid #e5e7eb;">
+                  📎 {{ pj.nomFichier }} <span style="color:#9ca3af;">({{ formatSize(pj.tailleOctets) }})</span>
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ── Corps ────────────────────────────────────────────────────────── -->
+    <div class="card" style="margin-top:1rem;">
+      <h3 class="card-title" style="margin-bottom:.75rem;">Contenu</h3>
+      <div class="msg-corps">{{ msg.corps }}</div>
+    </div>
+
+    <!-- ── Informations ──────────────────────────────────────────────────── -->
+    <div class="detail-grid" style="margin-top:1rem;">
+
+      <!-- Canaux -->
+      <div class="card">
+        <h3 class="card-title">Canaux de diffusion</h3>
+        <div style="margin-top:.75rem;display:flex;flex-wrap:wrap;gap:.5rem;">
+          @for (canal of msg.canaux; track canal) {
+            <span class="badge badge-diffuse">{{ canal }}</span>
+          }
+          @if (msg.canaux.length === 0) { <span class="text-muted">Aucun canal</span> }
+        </div>
+      </div>
+
+      <!-- Destinataires -->
+      <div class="card">
+        <h3 class="card-title">Destinataires ({{ msg.destinataires.length }})</h3>
+        <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.35rem;max-height:180px;overflow-y:auto;">
+          @if (msg.destinataires.length === 0) {
+            <span class="text-muted">Aucun destinataire défini</span>
+          }
+          @for (d of msg.destinataires; track d.id) {
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.83rem;">
+              <span class="badge" [class]="'badge-' + d.type.toLowerCase()">{{ labelType(d.type) }}</span>
+              {{ d.libelle }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Chronologie -->
+      <div class="card">
+        <h3 class="card-title">Chronologie</h3>
+        <dl class="info-list" style="margin-top:.75rem;">
+          <dt>Création</dt><dd>{{ formatDate(msg.dateCreation) }}</dd>
+          @if (msg.dateValidation) { <dt>Validation</dt><dd>{{ formatDate(msg.dateValidation) }}</dd> }
+          @if (msg.commentaireRetour) {
+            <dt style="color:#d97706;">Correction demandée</dt>
+            <dd style="color:#d97706;">{{ msg.commentaireRetour }}</dd>
+          }
+          @if (msg.dateProgrammee) { <dt>Programmée</dt><dd>{{ formatDate(msg.dateProgrammee) }}</dd> }
+          @if (msg.dateDiffusion) { <dt>Diffusée</dt><dd>{{ formatDate(msg.dateDiffusion) }}</dd> }
+          @if (msg.motiDeRejet) { <dt>Motif rejet</dt><dd style="color:#dc2626;">{{ msg.motiDeRejet }}</dd> }
+        </dl>
+      </div>
+
+      <!-- Pièces jointes -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+          <h3 class="card-title" style="margin:0;">Pièces jointes ({{ msg.piecesJointes.length }})</h3>
+          @if (msg.statut === 'Brouillon') {
+            <button class="btn-secondary" style="font-size:.75rem;padding:.3rem .7rem;" type="button" (click)="showModalPJ.set(true)">+ Ajouter</button>
+          }
+        </div>
+        @if (msg.piecesJointes.length === 0) {
+          <span class="text-muted">Aucune pièce jointe</span>
+        } @else {
+          @for (pj of msg.piecesJointes; track pj.id) {
+            <div class="pj-item">
+              <div>
+                <span>{{ pj.nomFichier }}</span>
+                <span class="text-muted" style="font-size:.78rem;margin-left:.5rem;">{{ formatSize(pj.tailleOctets) }}</span>
+              </div>
+              @if (msg.statut === 'Brouillon') {
+                <button class="btn-danger" style="font-size:.72rem;padding:.2rem .5rem;" type="button" (click)="supprimerPJ(pj.id)">×</button>
+              }
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════ MODALES ═════════════════════ -->
+
+  <!-- Soumettre -->
+  @if (showModalSoumettre()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Soumettre à validation</h3>
+        <p>Le message sera transmis à un validateur. Cette action est irréversible.</p>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="soumettre()" [disabled]="actionLoading()">Confirmer</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Demander correction -->
+  @if (showModalDemandCorrection()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Demander une correction</h3>
+        <p class="text-muted" style="font-size:.85rem;">Le message sera retourné à l'auteur en statut <strong>Brouillon</strong> pour correction. Il pourra être corrigé et resoumis.</p>
+        <div class="form-group">
+          <label>Commentaire pour l'auteur <span style="color:#dc2626;">*</span></label>
+          <textarea [(ngModel)]="commentaireCorrection" class="form-control" rows="3" placeholder="Décrire ce qui doit être corrigé..."></textarea>
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-secondary" style="border-color:#d97706;color:#d97706;" type="button" (click)="demanderCorrection()" [disabled]="actionLoading()">
+            @if (actionLoading()) { <span class="spinner" style="width:13px;height:13px;border-width:2px;"></span> }
+            Renvoyer en correction
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Valider -->
+  @if (showModalValider()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Valider le message</h3>
+        <div class="form-group">
+          <label>Commentaire (optionnel)</label>
+          <textarea [(ngModel)]="commentaireValidation" class="form-control" rows="3"></textarea>
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="valider()" [disabled]="actionLoading()">Valider</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Rejeter -->
+  @if (showModalRejeter()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Rejeter le message</h3>
+        <div class="form-group">
+          <label>Motif de rejet <span style="color:#dc2626;">*</span></label>
+          <textarea [(ngModel)]="motifRejet" class="form-control" rows="3" required></textarea>
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-danger" type="button" (click)="rejeter()" [disabled]="actionLoading()">Rejeter</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Programmer -->
+  @if (showModalProgrammer()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Programmer la diffusion</h3>
+        <div class="form-group">
+          <label>Date et heure d'envoi <span style="color:#dc2626;">*</span></label>
+          <input type="datetime-local" [(ngModel)]="dateProgrammee" class="form-control" />
+        </div>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="programmer()" [disabled]="actionLoading()">Programmer</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Diffuser maintenant -->
+  @if (showModalDiffuser()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Lancer la diffusion</h3>
+        <p>Le message sera envoyé immédiatement aux {{ destCibles().length }} destinataires configurés.</p>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="lancerDiffusion()" [disabled]="actionLoading()">Lancer maintenant</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Supprimer -->
+  @if (showModalSupprimer()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Supprimer le message</h3>
+        <p>Cette action est <strong>irréversible</strong>.</p>
+        @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-danger" type="button" (click)="supprimer()" [disabled]="actionLoading()">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Pièces jointes — upload -->
+  @if (showModalPJ()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Ajouter des pièces jointes</h3>
+        <p class="text-muted" style="font-size:.83rem;">Formats acceptés : tout fichier. Nécessite canal Email ou WhatsApp.</p>
+        <div class="form-group">
+          <input type="file" multiple class="form-control" (change)="onFilesSelected($event)" />
+        </div>
+        @if (selectedFiles.length > 0) {
+          <ul style="font-size:.82rem;margin:.5rem 0;padding-left:1.2rem;">
+            @for (f of selectedFiles; track f.name) { <li>{{ f.name }} ({{ formatSize(f.size) }})</li> }
+          </ul>
+        }
+        @if (pjError()) { <div class="error-banner">{{ pjError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="uploaderFichiers()" [disabled]="pjLoading() || !selectedFiles.length">
+            @if (pjLoading()) { <span class="spinner" style="width:14px;height:14px;border-width:2px;"></span> }
+            Envoyer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Destinataires — modale avec 5 onglets -->
+  @if (showModalDestinataires()) {
+    <div class="modal-overlay" (click)="fermerModales()">
+      <div class="modal modal-large" (click)="$event.stopPropagation()">
+        <h3>Définir les destinataires</h3>
+
+        <!-- Résumé des cibles sélectionnées -->
+        <div class="dest-selected" style="margin-bottom:.75rem;min-height:38px;display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem;background:#f9fafb;border-radius:.4rem;border:1px solid #e5e7eb;">
+          @if (destCibles().length === 0) {
+            <span class="text-muted" style="font-size:.8rem;align-self:center;">Aucun destinataire sélectionné</span>
+          }
+          @for (d of destCibles(); track d; let i = $index) {
+            <span class="dest-chip">
+              <span style="font-size:.65rem;font-weight:700;padding:.1rem .3rem;border-radius:.2rem;background:#dbeafe;color:#1d4ed8;margin-right:.3rem;">{{ labelType(d.type) }}</span>
+              {{ d.libelle }}
+              <button type="button" (click)="retirerDestinataire(i)" style="background:none;border:none;cursor:pointer;margin-left:.3rem;color:#9ca3af;font-size:.9rem;">×</button>
+            </span>
+          }
+        </div>
+
+        <!-- Onglets type de destinataire -->
+        <div class="dest-tabs">
+          <button type="button" class="dest-tab" [class.active]="destTab() === 'AgentIndividu'"    (click)="destTab.set('AgentIndividu')">Agent individuel</button>
+          <button type="button" class="dest-tab" [class.active]="destTab() === 'GroupeDiffusion'"  (click)="destTab.set('GroupeDiffusion')">Groupe de diffusion</button>
+          <button type="button" class="dest-tab" [class.active]="destTab() === 'DirectionService'" (click)="destTab.set('DirectionService')">Direction / Service</button>
+          <button type="button" class="dest-tab" [class.active]="destTab() === 'TousLesAgents'"    (click)="destTab.set('TousLesAgents')">Tous les agents</button>
+        </div>
+
+        <!-- Contenu onglet Agents -->
+        @if (destTab() === 'AgentIndividu') {
+          <div class="dest-tab-content">
+            <input type="text" class="form-control" style="margin-bottom:.5rem;font-size:.83rem;"
+                   placeholder="Rechercher un agent…"
+                   [(ngModel)]="rechercheAgent" />
+            <div class="dest-list">
+              @for (agent of agentsFiltres(); track agent.id) {
+                <div class="dest-list-item" [class.selected]="isAgentSelectionne(agent.id)"
+                     (click)="ajouterAgent(agent)">
+                  <span>{{ nomComplet(agent) }}</span>
+                  <span class="text-muted" style="font-size:.75rem;">{{ agent.matricule }} · {{ agent.entiteLibelle }}</span>
+                </div>
+              }
+              @if (agentsFiltres().length === 0) {
+                <span class="text-muted" style="font-size:.83rem;padding:.5rem 0;display:block;">Aucun agent trouvé</span>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Contenu onglet Groupes -->
+        @if (destTab() === 'GroupeDiffusion') {
+          <div class="dest-tab-content">
+            <input type="text" class="form-control" style="margin-bottom:.5rem;font-size:.83rem;"
+                   placeholder="Rechercher un groupe…"
+                   [(ngModel)]="rechercheGroupe" />
+            <div class="dest-list">
+              @for (g of groupesFiltres(); track g.id) {
+                <div class="dest-list-item" [class.selected]="isGroupeSelectionne(g.id)"
+                     (click)="ajouterGroupe(g)">
+                  <span>{{ g.nom }}</span>
+                  <span class="text-muted" style="font-size:.75rem;">{{ g.nombreMembres }} membres</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Contenu onglet Direction/Service -->
+        @if (destTab() === 'DirectionService') {
+          <div class="dest-tab-content">
+            <div class="dest-list">
+              @for (entite of entitesDistinctes(); track entite) {
+                <div class="dest-list-item" [class.selected]="isEntiteSelectionnee(entite)"
+                     (click)="ajouterEntite(entite)">
+                  <span>{{ entite }}</span>
+                  <span class="text-muted" style="font-size:.75rem;">
+                    {{ agents().filter(a => a.entiteLibelle === entite).length }} agent(s)
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Contenu onglet Tous -->
+        @if (destTab() === 'TousLesAgents') {
+          <div class="dest-tab-content" style="padding:.75rem 0;text-align:center;">
+            <p style="font-size:.9rem;margin-bottom:1rem;">
+              Envoyer à <strong>tous les agents actifs</strong> ({{ agents().length }} agents).
+            </p>
+            <button type="button" class="btn-primary"
+                    [disabled]="destCibles().some(d => d.type === 'TousLesAgents')"
+                    (click)="ajouterTousLesAgents()">
+              {{ destCibles().some(d => d.type === 'TousLesAgents') ? '✓ Déjà ajouté' : 'Ajouter Tous les agents' }}
+            </button>
+          </div>
+        }
+
+        @if (actionError()) { <div class="error-banner" style="margin-top:.5rem;">{{ actionError() }}</div> }
+        <div class="modal-actions">
+          <button class="btn-secondary" type="button" (click)="fermerModales()">Annuler</button>
+          <button class="btn-primary" type="button" (click)="definirDestinataires()" [disabled]="actionLoading() || destCibles().length === 0">
+            Enregistrer ({{ destCibles().length }})
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

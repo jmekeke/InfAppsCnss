@@ -18,22 +18,37 @@ public class GroupeDiffusion : AggregateRoot
     public DateTime DateCreation { get; private set; }
     public bool EstActif { get; private set; }
 
+    /// <summary>
+    /// Pour les groupes Dynamiques : type de critère RH ("Grade" ou "Entite").
+    /// Null pour les groupes Manuels.
+    /// </summary>
+    public string? CritereType { get; private set; }
+
+    /// <summary>
+    /// Pour les groupes Dynamiques : valeur du critère (libellé grade ou libellé entité).
+    /// Null pour les groupes Manuels.
+    /// </summary>
+    public string? CritereValeur { get; private set; }
+
     private readonly List<MembreGroupe> _membres = [];
     public IReadOnlyCollection<MembreGroupe> Membres => _membres.AsReadOnly();
 
     private GroupeDiffusion() { } // EF Core
 
-    public static GroupeDiffusion Creer(Guid createurId, string nom, string? description = null, TypeGroupe typeGroupe = TypeGroupe.Manuel)
+    public static GroupeDiffusion Creer(Guid createurId, string nom, string? description = null,
+        TypeGroupe typeGroupe = TypeGroupe.Manuel, string? critereType = null, string? critereValeur = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(nom);
         var groupe = new GroupeDiffusion
         {
-            CreateurId = createurId,
-            Nom = nom,
-            Description = description,
-            TypeGroupe = typeGroupe,
+            CreateurId   = createurId,
+            Nom          = nom,
+            Description  = description,
+            TypeGroupe   = typeGroupe,
             DateCreation = DateTime.UtcNow,
-            EstActif = true,
+            EstActif     = true,
+            CritereType  = typeGroupe == TypeGroupe.Dynamique ? critereType : null,
+            CritereValeur = typeGroupe == TypeGroupe.Dynamique ? critereValeur : null,
         };
         groupe.AddDomainEvent(new GroupeDiffusionCreeEvent(groupe.Id, nom));
         return groupe;
@@ -60,6 +75,34 @@ public class GroupeDiffusion : AggregateRoot
 
         _membres.Remove(membre);
         AddDomainEvent(new MembreRetireDeGroupeEvent(Id, agentId));
+    }
+
+    /// <summary>Modifie le nom, la description et le type du groupe.</summary>
+    public void Modifier(string nom, string? description, TypeGroupe typeGroupe)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(nom);
+        Nom         = nom.Trim();
+        Description = description?.Trim();
+        TypeGroupe  = typeGroupe;
+    }
+
+    /// <summary>Supprime logiquement le groupe (désactivation).</summary>
+    public void Supprimer()
+    {
+        if (!EstActif)
+            throw new InvalidOperationException($"Le groupe {Id} est déjà supprimé.");
+
+        EstActif = false;
+        AddDomainEvent(new GroupeDiffusionSupprimeEvent(Id));
+    }
+
+    /// <summary>Réactive un groupe précédemment désactivé.</summary>
+    public void Reactiver()
+    {
+        if (EstActif)
+            throw new InvalidOperationException($"Le groupe {Id} est déjà actif.");
+
+        EstActif = true;
     }
 
     /// <summary>Retourne le nombre de membres actifs ciblés (calculé avant diffusion).</summary>

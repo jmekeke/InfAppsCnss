@@ -1,0 +1,18 @@
+2026-06-10 02:07:39.053 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-10 02:07:39.072 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/messages responded 401 in 86.8047 ms

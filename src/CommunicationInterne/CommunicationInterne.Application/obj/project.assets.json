@@ -15,6 +15,23 @@
           }
         }
       },
+      "FluentValidation.DependencyInjectionExtensions/12.1.1": {
+        "type": "package",
+        "dependencies": {
+          "FluentValidation": "12.1.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.0"
+        },
+        "compile": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "MDiator/0.1.1": {
         "type": "package",
         "dependencies": {
@@ -43,38 +60,10 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Stateless/5.16.0": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0/Stateless.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Stateless.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Cnss.Metier.Assujettissement.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Cnss.Metier.Shared.Domain": "1.0.0",
-          "Stateless": "5.16.0"
-        },
-        "compile": {
-          "bin/placeholder/Cnss.Metier.Assujettissement.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Cnss.Metier.Assujettissement.Domain.dll": {}
-        }
-      },
       "Cnss.Metier.Shared.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Cnss.Metier.Assujettissement.Domain": "1.0.0",
           "Cnss.Metier.Shared.Domain": "1.0.0",
           "FluentValidation": "12.1.1",
           "MDiator": "0.1.1"
@@ -127,6 +116,21 @@
         "lib/net8.0/FluentValidation.xml"
       ]
     },
+    "FluentValidation.DependencyInjectionExtensions/12.1.1": {
+      "sha512": "D0VXh4dtjjX2aQizuaa0g6R8X3U1JaVqJPfGCvLwZX9t/O2h7tkpbitbadQMfwcgSPdDbI2vDxuwRMv/Uf9dHA==",
+      "type": "package",
+      "path": "fluentvalidation.dependencyinjectionextensions/12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
+        "fluentvalidation.dependencyinjectionextensions.nuspec",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.xml"
+      ]
+    },
     "MDiator/0.1.1": {
       "sha512": "2chLxRbsHaXkj8AOXNMqHTow+xCpikIVQdXaN1JHPzltIHLfYQIRqSki11dU1EI9aGacL1T+U6Alc7/t/N3yhg==",
       "type": "package",
@@ -171,30 +175,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Stateless/5.16.0": {
-      "sha512": "oGMd62r6wdj7LDOl7oOD2wJdjjK1Zum5UnV4lTDLdKiJAfAGF1SRaBKpX1TtmP1QKocPy4+94zazSZfHcowZCw==",
-      "type": "package",
-      "path": "stateless/5.16.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "Stateless.png",
-        "lib/net462/Stateless.dll",
-        "lib/net462/Stateless.xml",
-        "lib/net8.0/Stateless.dll",
-        "lib/net8.0/Stateless.xml",
-        "lib/netstandard2.0/Stateless.dll",
-        "lib/netstandard2.0/Stateless.xml",
-        "stateless.5.16.0.nupkg.sha512",
-        "stateless.nuspec"
-      ]
-    },
-    "Cnss.Metier.Assujettissement.Domain/1.0.0": {
-      "type": "project",
-      "path": "../../../../../cnss-metier/src/Assujettissement/Cnss.Metier.Assujettissement.Domain/Cnss.Metier.Assujettissement.Domain.csproj",
-      "msbuildProject": "../../../../../cnss-metier/src/Assujettissement/Cnss.Metier.Assujettissement.Domain/Cnss.Metier.Assujettissement.Domain.csproj"
-    },
     "Cnss.Metier.Shared.Application/1.0.0": {
       "type": "project",
       "path": "../../../../../cnss-metier/src/Shared/Cnss.Metier.Shared.Application/Cnss.Metier.Shared.Application.csproj",
@@ -216,6 +196,7 @@
       "Cnss.Metier.Shared.Application >= 1.0.0",
       "CommunicationInterne.Domain >= 1.0.0",
       "FluentValidation >= 12.*",
+      "FluentValidation.DependencyInjectionExtensions >= 12.*",
       "MDiator >= *"
     ]
   },
@@ -270,6 +251,10 @@
         "targetAlias": "net10.0",
         "dependencies": {
           "FluentValidation": {
+            "target": "Package",
+            "version": "[12.*, )"
+          },
+          "FluentValidation.DependencyInjectionExtensions": {
             "target": "Package",
             "version": "[12.*, )"
           },

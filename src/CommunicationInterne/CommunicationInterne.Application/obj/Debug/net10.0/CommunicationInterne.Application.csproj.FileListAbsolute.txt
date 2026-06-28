@@ -6,16 +6,15 @@ d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInt
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\CommunicationInterne.Application.deps.json
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\CommunicationInterne.Application.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\CommunicationInterne.Application.pdb
-d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Assujettissement.Domain.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Shared.Application.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\CommunicationInterne.Domain.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\CommunicationInterne.Domain.pdb
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Shared.Application.pdb
-d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Assujettissement.Domain.pdb
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\bin\Debug\net10.0\Cnss.Metier.Shared.Domain.pdb
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\Communic.7B4E6D95.Up2Date
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\CommunicationInterne.Application.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\refint\CommunicationInterne.Application.dll
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\CommunicationInterne.Application.pdb
 d:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\ref\CommunicationInterne.Application.dll
+D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\CommunicationInterne.Application\obj\Debug\net10.0\CommunicationInterne.Application.sourcelink.json

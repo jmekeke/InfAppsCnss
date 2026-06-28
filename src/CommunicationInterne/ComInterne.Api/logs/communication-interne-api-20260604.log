@@ -1,0 +1,15 @@
+2026-06-04 03:30:56.840 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-04 03:30:56.995 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5195
+2026-06-04 03:30:56.996 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-04 03:30:56.996 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-04 03:30:56.996 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-04 03:30:56.996 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-04 03:32:02.648 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-04 03:32:02.673 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-04 03:32:02.741 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-04 03:32:03.324 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-04 03:32:03.334 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 591.4763ms with message 'null'
+2026-06-04 03:32:03.344 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 668.8974ms
+2026-06-04 03:32:03.353 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 701.2805 ms
+2026-06-04 03:32:03.533 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /openapi/v1.json responded 200 in 142.9402 ms

@@ -1,0 +1,106 @@
+<!-- Page Formulaire message (création / modification) -->
+<div class="form-page">
+
+  <!-- Bouton retour -->
+  <a routerLink="/messages" class="btn-secondary" style="display:inline-flex;margin-bottom:1rem;">
+    ← Retour à la liste
+  </a>
+
+  <div class="card form-card">
+
+    <h2 class="card-title" style="margin-bottom:1.5rem;">
+      {{ isEdit() ? 'Modifier le message' : 'Nouveau message' }}
+    </h2>
+
+    @if (loading()) {
+      <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div>
+    }
+
+    @if (error()) {
+      <div class="error-banner">{{ error() }}</div>
+    }
+
+    @if (!loading()) {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Objet -->
+        <div class="form-group">
+          <label for="objet">Objet <span style="color:#dc2626;">*</span></label>
+          <input
+            id="objet"
+            type="text"
+            formControlName="objet"
+            [class]="'form-control' + (isInvalid('objet') ? ' is-invalid' : '')"
+            placeholder="Objet du message..."
+          />
+          @if (isInvalid('objet')) {
+            <span class="error-text">L'objet est obligatoire (minimum 3 caractères).</span>
+          }
+        </div>
+
+        <!-- Corps -->
+        <div class="form-group">
+          <label for="corps">Contenu du message <span style="color:#dc2626;">*</span></label>
+          <textarea
+            id="corps"
+            formControlName="corps"
+            [class]="'form-control' + (isInvalid('corps') ? ' is-invalid' : '')"
+            placeholder="Rédigez le contenu de votre message..."
+            rows="8"
+          ></textarea>
+          @if (isInvalid('corps')) {
+            <span class="error-text">Le contenu est obligatoire (minimum 10 caractères).</span>
+          }
+        </div>
+
+        <!-- Message institutionnel -->
+        <div class="form-group" style="flex-direction:row;align-items:center;gap:.75rem;">
+          <input
+            id="institutionnel"
+            type="checkbox"
+            formControlName="estInstitutionnel"
+            style="width:18px;height:18px;cursor:pointer;"
+          />
+          <label for="institutionnel" style="margin:0;cursor:pointer;">
+            Message institutionnel
+            <span class="text-muted" style="font-weight:400;">— nécessite validation obligatoire avant diffusion</span>
+          </label>
+        </div>
+
+        <!-- Canaux de diffusion -->
+        <div class="form-group">
+          <label>Canaux de diffusion <span style="color:#dc2626;">*</span></label>
+          <div class="canaux-grid">
+            @for (canal of tousLesCanaux; track canal) {
+              <label class="canal-item" [class.selected]="isCanalSelected(canal)">
+                <input
+                  type="checkbox"
+                  [checked]="isCanalSelected(canal)"
+                  (change)="toggleCanal(canal)"
+                />
+                {{ canalLabels[canal] }}
+              </label>
+            }
+          </div>
+          @if (form.value.canaux?.length === 0) {
+            <span class="error-text">Sélectionnez au moins un canal.</span>
+          }
+        </div>
+
+        <!-- Boutons -->
+        <div class="form-actions">
+          <a routerLink="/messages" class="btn-secondary">Annuler</a>
+          <button type="submit" class="btn-primary" [disabled]="saving()">
+            @if (saving()) {
+              <span class="spinner" style="width:14px;height:14px;border-width:2px;"></span>
+              Enregistrement...
+            } @else {
+              {{ isEdit() ? 'Enregistrer les modifications' : 'Créer le message' }}
+            }
+          </button>
+        </div>
+
+      </form>
+    }
+  </div>
+</div>

@@ -1,0 +1,209 @@
+@if (loading()) {
+  <div class="loading-state"><div class="spinner"></div><span>Chargement…</span></div>
+} @else if (errorMsg() && !agent()) {
+  <div class="alert alert-error">{{ errorMsg() }}<a routerLink="/membres/liste" class="back-link">← Retour</a></div>
+} @else if (agent()) {
+
+  <!-- En-tête agent -->
+  <div class="page-header card">
+    <div class="avatar">{{ (agent()!.nom ?? '?')[0] }}{{ (agent()!.prenom ?? '')[0] }}</div>
+    <div class="agent-info">
+      <h2>{{ nomComplet(agent()!) }}</h2>
+      <span class="muted">{{ agent()!.matricule }} — {{ agent()!.entiteLibelle ?? '—' }}</span>
+    </div>
+    <a [routerLink]="['/membres', agentId]" class="btn-secondary">← Fiche agent</a>
+  </div>
+
+  <!-- Alertes -->
+  @if (successMsg()) {
+    <div class="alert alert-success">{{ successMsg() }}</div>
+  }
+  @if (errorMsg()) {
+    <div class="alert alert-error">{{ errorMsg() }}</div>
+  }
+
+  <div class="voie-grid">
+
+    <!-- ═══════════════════════════════════════════════════════════ TÉLÉPHONES -->
+    <section class="card voie-section">
+      <h3 class="section-title">
+        <span class="icon-tel">📞</span> Numéros de téléphone
+      </h3>
+
+      @for (type of typesTelephone; track type) {
+        @let tel = telPour(type);
+        <div class="voie-row" [class.inactive]="tel && !tel.estActif">
+
+          <div class="voie-label">
+            <span class="type-badge">{{ type }}</span>
+            @if (tel) {
+              <span class="voie-valeur" [class.strikethrough]="!tel.estActif">{{ tel.numero }}</span>
+              @if (!tel.estActif) { <span class="badge-inactive">inactif</span> }
+            } @else {
+              <span class="muted">— non renseigné</span>
+            }
+          </div>
+
+          <!-- Formulaire inline d'édition -->
+          @if (editTelType() === type) {
+            <form class="inline-form" (submit)="$event.preventDefault(); sauvegarderTelephone()">
+              <input type="tel"
+                     class="input-sm"
+                     placeholder="+243 8XX XXX XXX"
+                     [value]="editTelNumero()"
+                     (input)="editTelNumero.set($any($event.target).value)"
+                     required />
+              <button type="submit" class="btn-primary btn-sm" [disabled]="saving()">Enregistrer</button>
+              <button type="button" class="btn-secondary btn-sm" (click)="annulerEditTel()">Annuler</button>
+            </form>
+          } @else {
+            <div class="voie-actions">
+              <button class="btn-action btn-edit"
+                      title="{{ tel ? 'Modifier' : 'Ajouter' }}"
+                      (click)="ouvrirEditTel(type)"
+                      [disabled]="saving()">
+                {{ tel ? '✏️ Modifier' : '➕ Ajouter' }}
+              </button>
+              @if (tel) {
+                @if (tel.estActif) {
+                  <button class="btn-action btn-warn"
+                          title="Désactiver"
+                          (click)="desactiverTelephone(type)"
+                          [disabled]="saving()">
+                    🔕 Désactiver
+                  </button>
+                } @else {
+                  <button class="btn-action btn-success"
+                          title="Réactiver"
+                          (click)="reactiverTelephone(type)"
+                          [disabled]="saving()">
+                    ✅ Réactiver
+                  </button>
+                }
+                <button class="btn-action btn-danger"
+                        title="Supprimer"
+                        (click)="supprimerTelephone(type)"
+                        [disabled]="saving()">
+                  🗑️ Supprimer
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ E-MAILS -->
+    <section class="card voie-section">
+      <h3 class="section-title">
+        <span class="icon-email">✉️</span> Adresses e-mail
+      </h3>
+
+      @for (type of typesEmail; track type) {
+        @let email = emailPour(type);
+        <div class="voie-row" [class.inactive]="email && !email.estActif">
+
+          <div class="voie-label">
+            <span class="type-badge">{{ labelType(type) }}</span>
+            @if (email) {
+              <span class="voie-valeur" [class.strikethrough]="!email.estActif">{{ email.adresse }}</span>
+              @if (!email.estActif) { <span class="badge-inactive">inactif</span> }
+            } @else {
+              <span class="muted">— non renseigné</span>
+            }
+          </div>
+
+          @if (editEmailType() === type) {
+            <form class="inline-form" (submit)="$event.preventDefault(); sauvegarderEmail()">
+              <input type="email"
+                     class="input-sm"
+                     placeholder="adresse@exemple.cd"
+                     [value]="editEmailAdresse()"
+                     (input)="editEmailAdresse.set($any($event.target).value)"
+                     required />
+              <button type="submit" class="btn-primary btn-sm" [disabled]="saving()">Enregistrer</button>
+              <button type="button" class="btn-secondary btn-sm" (click)="annulerEditEmail()">Annuler</button>
+            </form>
+          } @else {
+            <div class="voie-actions">
+              <button class="btn-action btn-edit"
+                      title="{{ email ? 'Modifier' : 'Ajouter' }}"
+                      (click)="ouvrirEditEmail(type)"
+                      [disabled]="saving()">
+                {{ email ? '✏️ Modifier' : '➕ Ajouter' }}
+              </button>
+              @if (email) {
+                @if (email.estActif) {
+                  <button class="btn-action btn-warn"
+                          title="Désactiver"
+                          (click)="desactiverEmail(type)"
+                          [disabled]="saving()">
+                    🔕 Désactiver
+                  </button>
+                } @else {
+                  <button class="btn-action btn-success"
+                          title="Réactiver"
+                          (click)="reactiverEmail(type)"
+                          [disabled]="saving()">
+                    ✅ Réactiver
+                  </button>
+                }
+                <button class="btn-action btn-danger"
+                        title="Supprimer"
+                        (click)="supprimerEmail(type)"
+                        [disabled]="saving()">
+                  🗑️ Supprimer
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+  </div><!-- /voie-grid -->
+
+  <!-- ═══════════════════════════════════════════════════════════ HISTORIQUE -->
+  <section class="card historique-section">
+    <button class="historique-toggle" (click)="toggleHistorique()">
+      📋 Historique des modifications
+      <span class="toggle-icon">{{ showHistorique() ? '▲' : '▼' }}</span>
+    </button>
+
+    @if (showHistorique()) {
+      <div class="historique-filters">
+        <button class="filter-btn" [class.active]="filtreCanal() === 'Tous'"      (click)="filtrerCanal('Tous')">Tous</button>
+        <button class="filter-btn" [class.active]="filtreCanal() === 'Telephone'" (click)="filtrerCanal('Telephone')">📞 Téléphone</button>
+        <button class="filter-btn" [class.active]="filtreCanal() === 'Email'"     (click)="filtrerCanal('Email')">✉️ E-mail</button>
+      </div>
+
+      @if (historiqueFiltre().length === 0) {
+        <p class="muted" style="padding: 1rem">Aucun historique disponible.</p>
+      } @else {
+        <table class="histo-table">
+          <thead>
+            <tr>
+              <th>Date</th><th>Canal</th><th>Type</th><th>Valeur</th>
+              <th>Action</th><th>Modifié par</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (h of historiqueFiltre(); track $index) {
+              <tr>
+                <td class="histo-date">{{ formatDate(h.dateAction) }}</td>
+                <td><span class="badge-canal" [class.canal-tel]="h.canal === 'Telephone'" [class.canal-email]="h.canal === 'Email'">
+                  {{ h.canal === 'Telephone' ? '📞' : '✉️' }} {{ h.canal }}
+                </span></td>
+                <td>{{ labelType(h.typeVoie) }}</td>
+                <td class="histo-valeur">{{ h.valeur }}</td>
+                <td><span class="badge-action action-{{ h.action.toLowerCase() }}">{{ labelAction(h.action) }}</span></td>
+                <td class="muted">{{ h.modifiePar }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+  </section>
+
+}

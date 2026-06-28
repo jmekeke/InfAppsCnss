@@ -1,0 +1,76 @@
+<!-- Page Dossiers de diffusion d'un message -->
+<div>
+  <a routerLink="/messages" class="btn-secondary" style="display:inline-flex;margin-bottom:1rem;">
+    ← Retour aux messages
+  </a>
+
+  <h2 class="page-title" style="margin-bottom:1.25rem;">Dossiers de diffusion</h2>
+
+  @if (loading()) { <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div> }
+  @if (error()) { <div class="error-banner">{{ error() }}</div> }
+
+  @if (!loading()) {
+    @if (dossiers().length === 0) {
+      <div class="empty-state" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;">
+        Aucun dossier de diffusion trouvé pour ce message.
+      </div>
+    } @else {
+      @for (d of dossiers(); track d.id) {
+        <!-- Carte par dossier -->
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="dossier-header" (click)="toggleDossier(d)">
+            <div>
+              <div class="dossier-titre">{{ d.groupeNom }}</div>
+              <div class="text-muted" style="font-size:.8rem;">{{ formatDate(d.dateCreation) }}</div>
+            </div>
+            <div class="dossier-stats">
+              <div class="stat-pill stat-total">{{ d.nombreTotal }} total</div>
+              <div class="stat-pill stat-success">{{ d.nombreEnvoyes }} ✓</div>
+              <div class="stat-pill stat-error">{{ d.nombreEchecs }} ✗</div>
+              <div class="taux">{{ tauxSucces(d) }}%</div>
+            </div>
+          </div>
+
+          <!-- Barre de progression -->
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width]="tauxSucces(d) + '%'"></div>
+          </div>
+
+          <!-- Lignes d'envoi (expansibles) -->
+          @if (dossierOuvert()?.id === d.id) {
+            <div style="margin-top:1rem;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Destinataire</th>
+                    <th>Email</th>
+                    <th>Canal</th>
+                    <th>Statut</th>
+                    <th>Date envoi</th>
+                    <th>Erreur</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (l of d.lignesEnvoi; track l.id) {
+                    <tr>
+                      <td style="font-weight:500;">{{ l.destinataireNom }}</td>
+                      <td class="text-muted">{{ l.destinataireEmail ?? '—' }}</td>
+                      <td class="text-muted">{{ l.canal }}</td>
+                      <td><span [class]="envoBadge(l.statut)">{{ envoLabel(l.statut) }}</span></td>
+                      <td class="text-muted">{{ formatDate(l.dateEnvoi) }}</td>
+                      <td class="text-muted" style="font-size:.8rem;color:#dc2626;">{{ l.messageErreur ?? '' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+
+          <button class="btn-action" style="margin-top:.75rem;" (click)="toggleDossier(d)">
+            {{ dossierOuvert()?.id === d.id ? 'Masquer les lignes' : 'Voir les lignes d\'envoi (' + d.lignesEnvoi.length + ')' }}
+          </button>
+        </div>
+      }
+    }
+  }
+</div>

@@ -1,4 +1,5 @@
 using MDiator;
+using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Cnss.Metier.CommunicationInterne.Domain.Aggregats;
 using Cnss.Metier.CommunicationInterne.Domain.Repositories;
 using Cnss.Metier.Shared.Application.Abstractions;
@@ -8,11 +9,14 @@ namespace Cnss.Metier.CommunicationInterne.Application.Commands.CreerGroupeDiffu
 
 public class CreerGroupeDiffusionHandler(
     IGroupeDiffusionRepository groupeRepo,
-    IUnitOfWork uow) : IMDiatorHandler<CreerGroupeDiffusionCommand, Result<Guid>>
+    IUnitOfWork uow,
+    ICurrentUserContext currentUser) : IMDiatorHandler<CreerGroupeDiffusionCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreerGroupeDiffusionCommand cmd, CancellationToken ct)
     {
-        var groupe = GroupeDiffusion.Creer(cmd.CreateurId, cmd.Nom, cmd.Description, cmd.TypeGroupe);
+        currentUser.SetUser(cmd.UserId, cmd.UserName);
+
+        var groupe = GroupeDiffusion.Creer(cmd.CreateurId, cmd.Nom, cmd.Description, cmd.TypeGroupe, cmd.CritereType, cmd.CritereValeur);
         groupeRepo.Add(groupe);
         await uow.SaveChangesAsync(ct);
         return Result.Success(groupe.Id);

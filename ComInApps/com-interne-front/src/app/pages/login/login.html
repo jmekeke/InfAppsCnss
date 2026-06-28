@@ -1,0 +1,67 @@
+<!-- Page Login — connexion à RubacCore (OAuth2/OIDC) -->
+<div class="login-page">
+  <div class="login-card">
+
+    <!-- Entête -->
+    <div class="login-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+           fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <h1 class="login-title">Communication Interne</h1>
+      <p class="login-subtitle">Caisse Nationale de Sécurité Sociale</p>
+    </div>
+
+    <!-- Erreur -->
+    @if (error()) {
+      <div class="error-banner">{{ error() }}</div>
+    }
+
+    <!-- Formulaire -->
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
+
+      <div class="form-group">
+        <label for="username">Identifiant</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          class="form-control"
+          placeholder="Votre identifiant CNSS"
+          required
+          autocomplete="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          class="form-control"
+          placeholder="••••••••"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary btn-submit"
+        [disabled]="loading() || !username || !password"
+      >
+        @if (loading()) {
+          <span class="spinner" style="width:16px;height:16px;border-width:2px;"></span>
+          Connexion en cours...
+        } @else {
+          Se connecter
+        }
+      </button>
+
+    </form>
+
+  </div>
+</div>

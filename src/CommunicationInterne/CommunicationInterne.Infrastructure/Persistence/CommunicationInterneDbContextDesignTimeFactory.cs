@@ -19,6 +19,7 @@ public sealed class CommunicationInterneDbContextDesignTimeFactory
             .UseNpgsql(
                 connectionString,
                 npg => npg.MigrationsHistoryTable("__ef_migrations_history", CommunicationInterneDbContext.Schema))
+            .ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning))
             .Options;
 
         return new CommunicationInterneDbContext(options);

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
+namespace CommunicationInterne.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CommunicationInterneDbContext))]
     partial class CommunicationInterneDbContextModelSnapshot : ModelSnapshot
@@ -18,10 +18,40 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("communication_interne")
-                .HasAnnotation("ProductVersion", "10.0.4")
+                .HasAnnotation("ProductVersion", "10.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.DestinataireCible", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<Guid>("MessageInterneId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ReferenceId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageInterneId");
+
+                    b.ToTable("MessageDestinataires", "communication_interne");
+                });
 
             modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.DossierDiffusion", b =>
                 {
@@ -59,6 +89,14 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("CreateurId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("CritereType")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("CritereValeur")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("timestamp with time zone");
 
@@ -86,6 +124,57 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.HasIndex("Nom");
 
                     b.ToTable("Groupes", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.HistoriqueVoie", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Canal")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("EstActif")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiePar")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TypeVoie")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Valeur")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("VoieCommunicationId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Canal");
+
+                    b.HasIndex("VoieCommunicationId", "DateAction");
+
+                    b.ToTable("HistoriquesVoie", "communication_interne");
                 });
 
             modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.LigneDiffusion", b =>
@@ -148,6 +237,17 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("AuteurId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AuteurNom")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("CommentaireRetour")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<string>("Corps")
                         .IsRequired()
                         .HasColumnType("text");
@@ -171,7 +271,8 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("MotiDeRejet")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Objet")
                         .IsRequired()
@@ -195,6 +296,131 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.ToTable("Messages", "communication_interne");
                 });
 
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.PieceJointe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateAjout")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("MessageInterneId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NomFichier")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<long>("TailleOctets")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TypeMime")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageInterneId");
+
+                    b.ToTable("PiecesJointes", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieCommunication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AgentIdRh")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Matricule")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentIdRh")
+                        .IsUnique();
+
+                    b.HasIndex("Matricule");
+
+                    b.ToTable("VoiesCommunication", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieEmail", b =>
+                {
+                    b.Property<Guid>("VoieCommunicationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Adresse")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("DateModification")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("EstActif")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.HasKey("VoieCommunicationId", "Type");
+
+                    b.ToTable("VoiesEmail", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieTelephone", b =>
+                {
+                    b.Property<Guid>("VoieCommunicationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("DateModification")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("EstActif")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("VoieCommunicationId", "Type");
+
+                    b.ToTable("VoiesTelephone", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Configurations.MessageGroupeDestinataireEntry", b =>
+                {
+                    b.Property<Guid>("MessageInterneId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GroupeId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("MessageInterneId", "GroupeId");
+
+                    b.HasIndex("GroupeId");
+
+                    b.ToTable("MessageGroupesDestinataires", "communication_interne");
+                });
+
             modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Configurations.MessageInterneCanalEntry", b =>
                 {
                     b.Property<Guid>("MessageInterneId")
@@ -207,6 +433,85 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.HasKey("MessageInterneId", "Canal");
 
                     b.ToTable("MessageCanaux", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.Shared.Domain.HistoriqueAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Commentaire")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DestinataireId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("DestinataireNom")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<Guid>("EntiteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EntiteType")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("EtatApres")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EtatAvant")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtilisateurId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("UtilisateurNom")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("UtilisateurRole")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateAction");
+
+                    b.HasIndex("EntiteType", "EntiteId");
+
+                    b.ToTable("historique_actions", "communication_interne");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.DestinataireCible", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.MessageInterne", null)
+                        .WithMany()
+                        .HasForeignKey("MessageInterneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.HistoriqueVoie", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieCommunication", null)
+                        .WithMany("Historique")
+                        .HasForeignKey("VoieCommunicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.LigneDiffusion", b =>
@@ -223,6 +528,42 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
                     b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.GroupeDiffusion", null)
                         .WithMany("Membres")
                         .HasForeignKey("GroupeDiffusionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.PieceJointe", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.MessageInterne", null)
+                        .WithMany()
+                        .HasForeignKey("MessageInterneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieEmail", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieCommunication", null)
+                        .WithMany("Emails")
+                        .HasForeignKey("VoieCommunicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieTelephone", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieCommunication", null)
+                        .WithMany("Telephones")
+                        .HasForeignKey("VoieCommunicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Configurations.MessageGroupeDestinataireEntry", b =>
+                {
+                    b.HasOne("Cnss.Metier.CommunicationInterne.Domain.Aggregats.MessageInterne", null)
+                        .WithMany()
+                        .HasForeignKey("MessageInterneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -244,6 +585,15 @@ namespace Cnss.Metier.CommunicationInterne.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.GroupeDiffusion", b =>
                 {
                     b.Navigation("Membres");
+                });
+
+            modelBuilder.Entity("Cnss.Metier.CommunicationInterne.Domain.Aggregats.VoieCommunication", b =>
+                {
+                    b.Navigation("Emails");
+
+                    b.Navigation("Historique");
+
+                    b.Navigation("Telephones");
                 });
 #pragma warning restore 612, 618
         }

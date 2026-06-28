@@ -1,0 +1,106 @@
+<!-- Page Liste des messages -->
+<div>
+  <!-- En-tête -->
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Messages internes</h2>
+      <p class="text-muted" style="margin:0;font-size:.9rem;">
+        {{ totalCount() }} message(s) au total
+      </p>
+    </div>
+    <a routerLink="/messages/nouveau" class="btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Nouveau message
+    </a>
+  </div>
+
+  <!-- Carte principale -->
+  <div class="card">
+    <!-- Barre de recherche -->
+    <div class="list-toolbar">
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          type="text"
+          [(ngModel)]="search"
+          (keyup.enter)="onSearch()"
+          placeholder="Rechercher par objet..."
+        />
+      </div>
+      <button type="button" class="btn-secondary" (click)="onSearch()">Rechercher</button>
+    </div>
+
+    <!-- Chargement -->
+    @if (loading()) {
+      <div class="loading-state"><div class="spinner"></div><span>Chargement...</span></div>
+    }
+
+    <!-- Erreur -->
+    @if (error()) {
+      <div class="error-banner">{{ error() }}</div>
+    }
+
+    <!-- Tableau -->
+    @if (!loading()) {
+      @if (messages().length === 0) {
+        <div class="empty-state">Aucun message trouvé.</div>
+      } @else {
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Objet</th>
+              <th>Canaux</th>
+              <th>Statut</th>
+              <th>Auteur</th>
+              <th>Date création</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (msg of messages(); track msg.id) {
+              <tr>
+                <td>
+                  <span style="font-weight:500;">{{ msg.objet }}</span>
+                  @if (msg.estInstitutionnel) {
+                    <span class="badge badge-valide" style="margin-left:.5rem;font-size:.68rem;">Institutionnel</span>
+                  }
+                </td>
+                <td class="text-muted" style="font-size:.8rem;">{{ msg.canaux.join(', ') }}</td>
+                <td><span [class]="badgeClass(msg.statut)">{{ statutLabel(msg.statut) }}</span></td>
+                <td class="text-muted">{{ msg.auteurNom }}</td>
+                <td class="text-muted">{{ formatDate(msg.dateCreation) }}</td>
+                <td>
+                  <div style="display:flex;gap:.5rem;">
+                    <a [routerLink]="['/messages', msg.id]" class="btn-action">Détail</a>
+                    @if (msg.statut === 'Brouillon') {
+                      <a [routerLink]="['/messages', msg.id, 'modifier']" class="btn-action">Modifier</a>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="btn-secondary" (click)="pagePrecedente()" [disabled]="page <= 1">
+            ← Précédent
+          </button>
+          <span class="text-muted" style="font-size:.875rem;">
+            Page {{ page }} / {{ totalPages }}
+          </span>
+          <button class="btn-secondary" (click)="pageSuivante()" [disabled]="page >= totalPages">
+            Suivant →
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -1,8 +1,8 @@
-using CommunicationInterne.Application.Ports;
+using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace CommunicationInterne.Infrastructure.ExternalServices;
+namespace Cnss.Metier.CommunicationInterne.Infrastructure.ExternalServices;
 
 /// <summary>
 /// Adaptateur ACL — interroge la base SQL Server du bounded context Agent.

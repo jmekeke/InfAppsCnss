@@ -9,5 +9,7 @@ public record CreerGroupeDiffusionCommand(
     string Nom,
     string? Description = null,
     TypeGroupe TypeGroupe = TypeGroupe.Manuel,
+    string? CritereType = null,
+    string? CritereValeur = null,
     string UserId = "",
     string? UserName = null) : IMDiatorRequest<Result<Guid>>;

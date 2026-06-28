@@ -14,6 +14,8 @@ public record MessageResumDto(
     string Objet,
     bool EstInstitutionnel,
     string Statut,
+    string AuteurNom,
+    IReadOnlyList<string> Canaux,
     DateTime DateCreation,
     DateTime? DateDiffusion);
 
@@ -24,11 +26,17 @@ public class ListerMessagesHandler(
     {
         var paged = await messageRepo.GetAllAsync(query.Page, query.PageSize, query.Search, ct);
 
+        // Chargement des canaux en une seule requête pour tous les messages de la page
+        var canauxParMessage = await messageRepo.GetCanauxForMessagesAsync(
+            paged.Items.Select(m => m.Id), ct);
+
         var dtos = paged.Items.Select(m => new MessageResumDto(
             m.Id,
             m.Objet,
             m.EstInstitutionnel,
             m.Statut.ToString(),
+            m.AuteurNom,
+            canauxParMessage.TryGetValue(m.Id, out var canaux) ? canaux : [],
             m.DateCreation,
             m.DateDiffusion)).ToList();
 

@@ -1,8 +1,8 @@
 using MDiator;
+using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Cnss.Metier.CommunicationInterne.Domain.Aggregats;
 using Cnss.Metier.CommunicationInterne.Domain.Enums;
 using Cnss.Metier.CommunicationInterne.Domain.Repositories;
-using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Cnss.Metier.Shared.Application.Abstractions;
 using Cnss.Metier.Shared.Domain.Common;
 
@@ -22,10 +22,13 @@ public class LancerDiffusionHandler(
     IEmailSender emailSender,
     ISmsSender smsSender,
     IWhatsAppSender whatsAppSender,
-    IUnitOfWork uow) : IMDiatorHandler<LancerDiffusionCommand, Result<Guid>>
+    IUnitOfWork uow,
+    ICurrentUserContext currentUser) : IMDiatorHandler<LancerDiffusionCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(LancerDiffusionCommand cmd, CancellationToken ct)
     {
+        currentUser.SetUser(cmd.UserId, cmd.UserName);
+
         var message = await messageRepo.GetWithCanauxAsync(cmd.MessageId, ct);
         if (message is null)
             return Result.NotFound<Guid>();

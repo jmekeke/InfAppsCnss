@@ -1,4 +1,5 @@
 using MDiator;
+using Cnss.Metier.CommunicationInterne.Application.Ports;
 using Cnss.Metier.CommunicationInterne.Domain.Repositories;
 using Cnss.Metier.Shared.Application.Abstractions;
 using Cnss.Metier.Shared.Domain.Common;
@@ -13,10 +14,13 @@ public record AjouterMembreGroupeCommand(
 
 public class AjouterMembreGroupeHandler(
     IGroupeDiffusionRepository groupeRepo,
-    IUnitOfWork uow) : IMDiatorHandler<AjouterMembreGroupeCommand, Result>
+    IUnitOfWork uow,
+    ICurrentUserContext currentUser) : IMDiatorHandler<AjouterMembreGroupeCommand, Result>
 {
     public async Task<Result> Handle(AjouterMembreGroupeCommand cmd, CancellationToken ct)
     {
+        currentUser.SetUser(cmd.UserId, cmd.UserName);
+
         var groupe = await groupeRepo.GetWithMembresAsync(cmd.GroupeId, ct);
         if (groupe is null)
             return Result.NotFound();

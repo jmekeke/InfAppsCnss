@@ -1,0 +1,59 @@
+<!-- Fiche agent -->
+@if (loading()) {
+  <div class="loading-state"><div class="spinner"></div><span>Chargement…</span></div>
+} @else if (error()) {
+  <div class="error-banner">
+    {{ error() }}
+    <a routerLink="/membres/liste" class="back-link">← Retour à la liste</a>
+  </div>
+} @else if (agent()) {
+  <div class="fiche-container">
+
+    <div class="fiche-header">
+      <div class="fiche-avatar">
+        {{ (agent()!.nom ?? '?')[0] }}{{ (agent()!.prenom ?? '')[0] }}
+      </div>
+      <div class="fiche-identity">
+        <h2 class="fiche-name">{{ nomComplet(agent()!) }}</h2>
+        <span class="fiche-matricule">Matricule : {{ agent()!.matricule ?? '—' }}</span>
+      </div>
+      <a routerLink="/membres/liste" class="btn-secondary back-btn">← Retour</a>
+    </div>
+
+    <div class="fiche-grid">
+
+      <div class="card fiche-section">
+        <h3 class="section-title">Poste</h3>
+        <dl class="dl-grid">
+          <dt>Entité</dt>       <dd>{{ agent()!.entiteLibelle  ?? '—' }}</dd>
+          <dt>Grade</dt>        <dd>{{ agent()!.gradeLibelle   ?? '—' }}</dd>
+          <dt>Fonction</dt>     <dd>{{ agent()!.fonctionLibelle ?? '—' }}</dd>
+          <dt>Catégorie</dt>    <dd>{{ agent()!.categorie       ?? '—' }}</dd>
+        </dl>
+      </div>
+
+      <div class="card fiche-section">
+        <h3 class="section-title">Contact RH</h3>
+        <dl class="dl-grid">
+          <dt>Email pro</dt>    <dd>{{ agent()!.emailProfessionnel ?? '—' }}</dd>
+          <dt>Email perso</dt>  <dd>{{ agent()!.emailPersonnel     ?? '—' }}</dd>
+          <dt>Téléphone</dt>    <dd>{{ agent()!.telephone          ?? '—' }}</dd>
+        </dl>
+        <a [routerLink]="['/membres', agent()!.id, 'voie-communication']" class="btn-voie">
+          📋 Gérer les voies de communication
+        </a>
+      </div>
+
+      <div class="card fiche-section">
+        <h3 class="section-title">État civil</h3>
+        <dl class="dl-grid">
+          <dt>Sexe</dt>          <dd>{{ agent()!.sexe      ?? '—' }}</dd>
+          <dt>État civil</dt>    <dd>{{ agent()!.etatCivil ?? '—' }}</dd>
+          <dt>Date naissance</dt><dd>{{ formatDate(agent()!.dateNaissance) }}</dd>
+          <dt>Date engagement</dt><dd>{{ formatDate(agent()!.dateEngagement) }}</dd>
+        </dl>
+      </div>
+
+    </div>
+  </div>
+}

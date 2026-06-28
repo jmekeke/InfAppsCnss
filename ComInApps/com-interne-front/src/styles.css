@@ -1,0 +1,272 @@
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+/* Inspiré du thème DashboardFront — couleur primaire bleue CNSS              */
+:root {
+  --color-bg:            #f8fafc;
+  --color-surface:       #ffffff;
+  --color-border:        #e2e8f0;
+  --color-text:          #1e293b;
+  --color-text-muted:    #64748b;
+  --color-primary:       #0e7490;   /* bleu-teal CNSS */
+  --color-primary-light: #ecfeff;
+  --color-primary-dark:  #0a5f7a;
+
+  /* Statuts du cycle de vie des messages */
+  --status-brouillon:   #6b7280; /* gris */
+  --status-attente:     #d97706; /* orange */
+  --status-valide:      #059669; /* vert */
+  --status-rejete:      #dc2626; /* rouge */
+  --status-programme:   #7c3aed; /* violet */
+  --status-diffuse:     #0284c7; /* bleu */
+}
+
+/* ── Reset / Base ────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── Utilitaires partagés ───────────────────────────────────────────────────── */
+.text-muted  { color: var(--color-text-muted); }
+.text-right  { text-align: right; }
+
+/* État de chargement */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  color: var(--color-text-muted);
+}
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Bannière d'erreur */
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* État vide */
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+/* ── Tableau de données ──────────────────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.data-table thead th {
+  background: var(--color-bg);
+  padding: 0.65rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+.data-table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.1s;
+}
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table tbody tr:hover { background: var(--color-bg); }
+.data-table td {
+  padding: 0.65rem 1rem;
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────────────────── */
+.btn-primary {
+  height: 38px;
+  padding: 0 1.2rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  height: 38px;
+  padding: 0 1.2rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-secondary:hover { background: var(--color-bg); }
+
+.btn-danger {
+  height: 38px;
+  padding: 0 1.2rem;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.btn-danger:hover { background: #fee2e2; }
+
+.btn-action {
+  padding: 0.3rem 0.75rem;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-action:hover { background: #cffafe; }
+
+/* ── Badges de statut message ────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.badge-brouillon   { background: #f3f4f6; color: var(--status-brouillon); }
+.badge-attente     { background: #fffbeb; color: var(--status-attente); }
+.badge-valide      { background: #f0fdf4; color: var(--status-valide); }
+.badge-rejete      { background: #fef2f2; color: var(--status-rejete); }
+.badge-programme   { background: #f5f3ff; color: var(--status-programme); }
+.badge-diffuse     { background: #e0f2fe; color: var(--status-diffuse); }
+
+/* ── Formulaires ────────────────────────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.form-control {
+  height: 40px;
+  padding: 0 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.1);
+}
+.form-control.is-invalid { border-color: #dc2626; }
+textarea.form-control {
+  height: auto;
+  min-height: 120px;
+  padding: 0.6rem 0.875rem;
+  resize: vertical;
+}
+.error-text {
+  font-size: 0.8rem;
+  color: #dc2626;
+}
+
+/* ── Carte (card) ────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* ── Barre de recherche ─────────────────────────────────────────────────────── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  height: 38px;
+  min-width: 220px;
+}
+.search-bar input {
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  background: transparent;
+  width: 100%;
+  color: var(--color-text);
+}
+.search-bar svg { color: var(--color-text-muted); flex-shrink: 0; }

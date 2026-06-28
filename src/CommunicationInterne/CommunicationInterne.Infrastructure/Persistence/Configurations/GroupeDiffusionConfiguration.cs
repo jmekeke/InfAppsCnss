@@ -14,6 +14,8 @@ public class GroupeDiffusionConfiguration : IEntityTypeConfiguration<GroupeDiffu
         builder.Property(g => g.Nom).HasMaxLength(200).IsRequired();
         builder.Property(g => g.Description).HasMaxLength(1000);
         builder.Property(g => g.TypeGroupe).HasConversion<string>().HasMaxLength(20);
+        builder.Property(g => g.CritereType).HasMaxLength(20);
+        builder.Property(g => g.CritereValeur).HasMaxLength(300);
 
         builder.HasIndex(g => g.Nom);
         builder.HasIndex(g => g.CreateurId);

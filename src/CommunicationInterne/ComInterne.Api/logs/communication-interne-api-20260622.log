@@ -1,0 +1,180 @@
+2026-06-22 11:22:26.411 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+2026-06-22 11:22:26.411 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-22 11:22:26.434 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."AuteurNom", m."CommentaireRetour", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-22 11:22:26.435 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."CritereType", g0."CritereValeur", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."CritereType", g."CritereValeur", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    ORDER BY g."Nom"
+    LIMIT @p1 OFFSET @p
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Nom", g0."Id", m."GroupeDiffusionId"
+2026-06-22 11:22:26.439 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion responded 200 in 138.6503 ms
+2026-06-22 11:22:26.440 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (2ms) [Parameters=[@ids='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."MessageInterneId", m."Canal"
+FROM communication_interne."MessageCanaux" AS m
+WHERE m."MessageInterneId" = ANY (@ids)
+2026-06-22 11:22:26.444 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 143.7768 ms
+2026-06-22 11:22:32.191 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+2026-06-22 11:22:32.194 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."AuteurNom", m."CommentaireRetour", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-22 11:22:32.198 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@ids='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."MessageInterneId", m."Canal"
+FROM communication_interne."MessageCanaux" AS m
+WHERE m."MessageInterneId" = ANY (@ids)
+2026-06-22 11:22:32.200 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 13.3656 ms
+2026-06-22 11:22:35.807 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-22 11:22:35.811 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."CritereType", g0."CritereValeur", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."CritereType", g."CritereValeur", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    ORDER BY g."Nom"
+    LIMIT @p1 OFFSET @p
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Nom", g0."Id", m."GroupeDiffusionId"
+2026-06-22 11:22:35.814 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion responded 200 in 11.2201 ms
+2026-06-22 11:22:35.987 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents responded 200 in 184.1140 ms
+2026-06-22 11:22:51.279 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT v."AgentIdRh", v."Id", v2."Type", v2."Numero", v2."VoieCommunicationId", v3."Type", v3."Adresse", v3."VoieCommunicationId"
+FROM communication_interne."VoiesCommunication" AS v
+LEFT JOIN (
+    SELECT v0."Type", v0."Numero", v0."VoieCommunicationId"
+    FROM communication_interne."VoiesTelephone" AS v0
+    WHERE v0."EstActif"
+) AS v2 ON v."Id" = v2."VoieCommunicationId"
+LEFT JOIN (
+    SELECT v1."Type", v1."Adresse", v1."VoieCommunicationId"
+    FROM communication_interne."VoiesEmail" AS v1
+    WHERE v1."EstActif"
+) AS v3 ON v."Id" = v3."VoieCommunicationId"
+ORDER BY v."Id", v2."VoieCommunicationId", v2."Type", v3."VoieCommunicationId"
+2026-06-22 11:22:51.285 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/voies-resume responded 200 in 22.2444 ms
+2026-06-22 11:22:51.382 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents responded 200 in 119.9801 ms
+2026-06-22 11:23:00.132 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-22 11:23:00.139 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (3ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."CritereType", g0."CritereValeur", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."CritereType", g."CritereValeur", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    ORDER BY g."Nom"
+    LIMIT @p1 OFFSET @p
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Nom", g0."Id", m."GroupeDiffusionId"
+2026-06-22 11:23:00.143 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion responded 200 in 12.3100 ms
+2026-06-22 11:23:00.260 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents responded 200 in 130.6402 ms
+2026-06-22 11:23:00.832 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+2026-06-22 11:23:00.835 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."AuteurNom", m."CommentaireRetour", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-22 11:23:00.837 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (0ms) [Parameters=[@ids='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."MessageInterneId", m."Canal"
+FROM communication_interne."MessageCanaux" AS m
+WHERE m."MessageInterneId" = ANY (@ids)
+2026-06-22 11:23:00.840 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 9.6436 ms
+2026-06-22 11:23:01.356 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-22 11:23:01.356 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+2026-06-22 11:23:01.361 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."CritereType", g0."CritereValeur", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."CritereType", g."CritereValeur", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    ORDER BY g."Nom"
+    LIMIT @p1 OFFSET @p
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Nom", g0."Id", m."GroupeDiffusionId"
+2026-06-22 11:23:01.365 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."AuteurNom", m."CommentaireRetour", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-22 11:23:01.368 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion responded 200 in 14.6226 ms
+2026-06-22 11:23:01.373 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@ids='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."MessageInterneId", m."Canal"
+FROM communication_interne."MessageCanaux" AS m
+WHERE m."MessageInterneId" = ANY (@ids)
+2026-06-22 11:23:01.376 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 22.7962 ms
+2026-06-22 11:24:22.776 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+2026-06-22 11:24:22.779 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."AuteurNom", m."CommentaireRetour", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+WHERE NOT (m."EstArchive")
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-22 11:24:22.782 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (0ms) [Parameters=[@ids='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."MessageInterneId", m."Canal"
+FROM communication_interne."MessageCanaux" AS m
+WHERE m."MessageInterneId" = ANY (@ids)
+2026-06-22 11:24:22.785 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 10.2860 ms
+2026-06-22 11:24:27.714 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Groupes" AS g
+2026-06-22 11:24:27.718 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g0."Id", g0."CreateurId", g0."CritereType", g0."CritereValeur", g0."DateCreation", g0."Description", g0."EstActif", g0."Nom", g0."TypeGroupe", m."GroupeDiffusionId", m."AgentId", m."DateAjout"
+FROM (
+    SELECT g."Id", g."CreateurId", g."CritereType", g."CritereValeur", g."DateCreation", g."Description", g."EstActif", g."Nom", g."TypeGroupe"
+    FROM communication_interne."Groupes" AS g
+    ORDER BY g."Nom"
+    LIMIT @p1 OFFSET @p
+) AS g0
+LEFT JOIN communication_interne."MembresGroupe" AS m ON g0."Id" = m."GroupeDiffusionId"
+ORDER BY g0."Nom", g0."Id", m."GroupeDiffusionId"
+2026-06-22 11:24:27.722 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/groupes-diffusion responded 200 in 10.2517 ms
+2026-06-22 11:24:27.831 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents responded 200 in 119.8720 ms
+2026-06-22 11:24:28.415 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT v."AgentIdRh", v."Id", v2."Type", v2."Numero", v2."VoieCommunicationId", v3."Type", v3."Adresse", v3."VoieCommunicationId"
+FROM communication_interne."VoiesCommunication" AS v
+LEFT JOIN (
+    SELECT v0."Type", v0."Numero", v0."VoieCommunicationId"
+    FROM communication_interne."VoiesTelephone" AS v0
+    WHERE v0."EstActif"
+) AS v2 ON v."Id" = v2."VoieCommunicationId"
+LEFT JOIN (
+    SELECT v1."Type", v1."Adresse", v1."VoieCommunicationId"
+    FROM communication_interne."VoiesEmail" AS v1
+    WHERE v1."EstActif"
+) AS v3 ON v."Id" = v3."VoieCommunicationId"
+ORDER BY v."Id", v2."VoieCommunicationId", v2."Type", v3."VoieCommunicationId"
+2026-06-22 11:24:28.417 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents/voies-resume responded 200 in 4.7485 ms
+2026-06-22 11:24:28.500 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/agents responded 200 in 87.9957 ms

@@ -1,0 +1,255 @@
+﻿<!-- Sous-onglet : Liste des agents actifs -->
+<div class="liste-container">
+
+  <!-- ── En-tête avec barre de recherche ──────────────────────────────────── -->
+  <div class="liste-toolbar">
+    <div class="liste-header-left">
+      <h2 class="liste-title">Agents actifs</h2>
+      <span class="badge-count">{{ agentsFiltres().length }} / {{ agentsActifs().length }}</span>
+    </div>
+
+    <div class="search-wrapper">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+        <path fill-rule="evenodd" d="M9 3a6 6 0 100 12A6 6 0 009 3zM1 9a8 8 0 1114.32 4.906l3.387 3.387a1 1 0 01-1.414 1.414l-3.387-3.387A8 8 0 011 9z" clip-rule="evenodd"/>
+      </svg>
+      <input type="text" class="search-input"
+             [ngModel]="recherche()" (ngModelChange)="recherche.set($event); onRecherche()"
+             placeholder="Rechercher par nom, matricule, entité…" autocomplete="off"/>
+      @if (recherche()) {
+        <button class="search-clear" type="button" (click)="effacerRecherche()" title="Effacer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+          </svg>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <span>Chargement des agents…</span>
+    </div>
+  } @else if (error()) {
+    <div class="error-banner">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16" style="flex-shrink:0">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+      </svg>
+      {{ error() }}
+    </div>
+  } @else if (agentsActifs().length === 0) {
+    <div class="empty-state">
+      <p>Aucun agent actif trouvé.</p>
+    </div>
+  } @else if (agentsFiltres().length === 0) {
+    <div class="empty-state">
+      <p>Aucun résultat pour <strong>« {{ recherche() }} »</strong></p>
+      <button type="button" class="btn-link" (click)="effacerRecherche()">Effacer la recherche</button>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Matricule</th>
+            <th>Nom complet</th>
+            <th>Entité</th>
+            <th>Grade</th>
+            <th>Fonction</th>
+            <th>Email professionnel</th>
+            <th>Téléphone</th>
+            <th class="th-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (agent of pageCourante(); track agent.id) {
+            <tr>
+              <td><span class="matricule-chip">{{ agent.matricule ?? '—' }}</span></td>
+              <td class="td-name" [title]="nomComplet(agent)">{{ nomComplet(agent) }}</td>
+              <td class="td-trunc" [title]="agent.entiteLibelle ?? ''">{{ agent.entiteLibelle ?? '—' }}</td>
+              <td class="td-trunc" [title]="agent.gradeLibelle ?? ''">{{ agent.gradeLibelle ?? '—' }}</td>
+              <td class="td-trunc" [title]="agent.fonctionLibelle ?? ''">{{ agent.fonctionLibelle ?? '—' }}</td>
+              <td class="td-contact">
+                @if (emailAffiche(agent) !== '—') {
+                  <a [href]="'mailto:' + emailAffiche(agent)" class="contact-link" [title]="emailAffiche(agent)">{{ emailAffiche(agent) }}</a>
+                } @else {
+                  <span class="text-muted">—</span>
+                }
+              </td>
+              <td class="td-contact">
+                @if (telephoneAffiche(agent) !== '—') {
+                  <a [href]="'tel:' + telephoneAffiche(agent)" class="contact-link">{{ telephoneAffiche(agent) }}</a>
+                } @else {
+                  <span class="text-muted">—</span>
+                }
+              </td>
+              <td class="td-actions">
+                <a [routerLink]="['/membres', agent.id]" class="btn-row btn-voir" title="Voir la fiche agent">Voir</a>
+                <button class="btn-row btn-tel" type="button"
+                        title="Gérer les numéros de téléphone"
+                        (click)="ouvrirModal(agent, 'tel')">Tél.</button>
+                <button class="btn-row btn-email" type="button"
+                        [disabled]="!canEmail()"
+                        [title]="canEmail() ? 'Gérer les adresses e-mail' : 'Autorisation manquante'"
+                        (click)="ouvrirModal(agent, 'email')">Email</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="pagination">
+        <button class="page-btn page-prev" type="button"
+                (click)="aller(page() - 1)" [disabled]="page() === 1" title="Précédent">‹</button>
+        @for (p of pageNumbers(); track p) {
+          @if (p === '…') {
+            <span class="page-dots">…</span>
+          } @else {
+            <button class="page-btn page-num" type="button"
+                    [class.page-active]="p === page()"
+                    (click)="aller(p)">{{ p }}</button>
+          }
+        }
+        <button class="page-btn page-next" type="button"
+                (click)="aller(page() + 1)" [disabled]="page() === totalPages()" title="Suivant">›</button>
+        <span class="page-summary">{{ (page() - 1) * 20 + 1 }}–{{ pageFinActuelle() }} sur {{ agentsFiltres().length }}</span>
+      </div>
+    }
+  }
+
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL ══ -->
+@if (modalVisible()) {
+  <div class="modal-backdrop" (click)="fermerModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <div class="modal-title-block">
+          <div class="modal-icon-wrap" [class.icon-tel]="modalCanal() === 'tel'" [class.icon-email]="modalCanal() === 'email'">
+            @if (modalCanal() === 'tel') {
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z" clip-rule="evenodd"/>
+              </svg>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z"/>
+                <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z"/>
+              </svg>
+            }
+          </div>
+          <div>
+            <h3 class="modal-title">{{ modalCanal() === 'tel' ? 'Numéros de téléphone' : 'Adresses e-mail' }}</h3>
+            <p class="modal-subtitle">{{ nomComplet(modalAgent()!) }} · <span class="matricule-chip sm">{{ modalAgent()!.matricule }}</span></p>
+          </div>
+        </div>
+        <button class="modal-close" type="button" (click)="fermerModal()" title="Fermer (Échap)">✕</button>
+      </div>
+
+      @if (modalSuccess()) {
+        <div class="modal-alert alert-success">{{ modalSuccess() }}</div>
+      }
+      @if (modalError()) {
+        <div class="modal-alert alert-error">{{ modalError() }}</div>
+      }
+
+      <div class="modal-body">
+        @if (modalLoading()) {
+          <div class="modal-loading"><div class="spinner"></div><span>Chargement…</span></div>
+        } @else {
+
+          @if (modalCanal() === 'tel') {
+            @for (type of typesTelephone; track type) {
+              @let tel = telPour(type);
+              <div class="voie-row" [class.row-inactive]="tel && !tel.estActif">
+                <div class="voie-info">
+                  <span class="type-chip">{{ labelType(type) }}</span>
+                  @if (tel) {
+                    <span class="voie-val" [class.val-off]="!tel.estActif">{{ tel.numero }}</span>
+                    @if (!tel.estActif) { <span class="badge-off">Inactif</span> }
+                  } @else {
+                    <span class="val-empty">Non renseigné</span>
+                  }
+                </div>
+                @if (editType() === type) {
+                  <div class="inline-form">
+                    <input type="tel" class="inp" placeholder="+243 8XX XXX XXX"
+                           [value]="editValeur()"
+                           (input)="editValeur.set($any($event.target).value)"
+                           (keyup.enter)="sauvegarder()" (keyup.escape)="annulerEdit()" autofocus/>
+                    <button class="btn-save" type="button" (click)="sauvegarder()" [disabled]="modalSaving()">✓</button>
+                    <button class="btn-cancel" type="button" (click)="annulerEdit()">✕</button>
+                  </div>
+                } @else {
+                  <div class="voie-btns">
+                    <button class="btn-act btn-edit" type="button" [title]="tel ? 'Modifier' : 'Ajouter'"
+                            (click)="ouvrirEdit(type, tel?.numero ?? '')" [disabled]="modalSaving()">
+                      {{ tel ? '✏️' : '+' }}
+                    </button>
+                    @if (tel) {
+                      @if (tel.estActif) {
+                        <button class="btn-act btn-warn" type="button" title="Désactiver" (click)="desactiverTel(type)" [disabled]="modalSaving()">⏸</button>
+                      } @else {
+                        <button class="btn-act btn-ok" type="button" title="Réactiver" (click)="reactiverTel(type)" [disabled]="modalSaving()">▶</button>
+                      }
+                      <button class="btn-act btn-del" type="button" title="Supprimer" (click)="supprimerTel(type)" [disabled]="modalSaving()">🗑</button>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          }
+
+          @if (modalCanal() === 'email') {
+            @for (type of typesEmail; track type) {
+              @let email = emailPour(type);
+              <div class="voie-row" [class.row-inactive]="email && !email.estActif">
+                <div class="voie-info">
+                  <span class="type-chip">{{ labelType(type) }}</span>
+                  @if (email) {
+                    <span class="voie-val" [class.val-off]="!email.estActif">{{ email.adresse }}</span>
+                    @if (!email.estActif) { <span class="badge-off">Inactif</span> }
+                  } @else {
+                    <span class="val-empty">Non renseigné</span>
+                  }
+                </div>
+                @if (editType() === type) {
+                  <div class="inline-form">
+                    <input type="email" class="inp" placeholder="adresse@cnss.cd"
+                           [value]="editValeur()"
+                           (input)="editValeur.set($any($event.target).value)"
+                           (keyup.enter)="sauvegarder()" (keyup.escape)="annulerEdit()" autofocus/>
+                    <button class="btn-save" type="button" (click)="sauvegarder()" [disabled]="modalSaving()">✓</button>
+                    <button class="btn-cancel" type="button" (click)="annulerEdit()">✕</button>
+                  </div>
+                } @else {
+                  <div class="voie-btns">
+                    <button class="btn-act btn-edit" type="button" [title]="email ? 'Modifier' : 'Ajouter'"
+                            (click)="ouvrirEdit(type, email?.adresse ?? '')" [disabled]="modalSaving()">
+                      {{ email ? '✏️' : '+' }}
+                    </button>
+                    @if (email) {
+                      @if (email.estActif) {
+                        <button class="btn-act btn-warn" type="button" title="Désactiver" (click)="desactiverEmail(type)" [disabled]="modalSaving()">⏸</button>
+                      } @else {
+                        <button class="btn-act btn-ok" type="button" title="Réactiver" (click)="reactiverEmail(type)" [disabled]="modalSaving()">▶</button>
+                      }
+                      <button class="btn-act btn-del" type="button" title="Supprimer" (click)="supprimerEmail(type)" [disabled]="modalSaving()">🗑</button>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          }
+
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" type="button" (click)="fermerModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,4 +1,4 @@
-namespace CommunicationInterne.Application.Ports;
+namespace Cnss.Metier.CommunicationInterne.Application.Ports;
 
 /// <summary>
 /// Port ACL vers le bounded context Agent (base SQL Server externe).

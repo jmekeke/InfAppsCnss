@@ -1,0 +1,229 @@
+2026-06-08 12:28:17.284 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-08 12:28:17.446 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5195
+2026-06-08 12:28:17.448 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-08 12:28:17.449 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-08 12:28:17.450 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-08 12:28:17.450 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-08 12:29:15.475 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-08 12:29:18.884 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 404 in 3399.7381 ms
+2026-06-08 12:29:26.410 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 404 in 1.2635 ms
+2026-06-08 12:29:54.692 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 404 in 5.7544 ms
+2026-06-08 16:00:11.242 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2026-06-08 16:00:11.309 +01:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5100
+2026-06-08 16:00:11.310 +01:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-06-08 16:00:11.310 +01:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-06-08 16:00:11.310 +01:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\J_Projetsd\AppMetier\Autre\InfoCnss\src\CommunicationInterne\ComInterne.Api
+2026-06-08 16:00:11.310 +01:00 [DBG] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2026-06-08 16:02:28.268 +01:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-06-08 16:02:31.764 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 16:02:33.060 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 16:02:34.183 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 16:02:34.192 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 1130.5394ms with message 'null'
+2026-06-08 16:02:34.199 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 2433.2519ms
+2026-06-08 16:02:34.204 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 5933.1288 ms
+2026-06-08 16:02:38.764 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+2026-06-08 16:02:38.860 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (8ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-08 16:02:38.898 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 581.9896 ms
+2026-06-08 16:03:09.739 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 16:03:09.742 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 16:03:09.815 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 16:03:09.816 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 73.5878ms with message 'null'
+2026-06-08 16:03:09.816 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 77.0003ms
+2026-06-08 16:03:09.816 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 79.6528 ms
+2026-06-08 16:03:09.909 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+2026-06-08 16:03:09.913 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-08 16:03:09.913 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 10.2088 ms
+2026-06-08 16:03:31.826 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 16:03:31.827 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 16:03:31.837 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 16:03:31.838 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 10.3908ms with message 'null'
+2026-06-08 16:03:31.838 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 11.9652ms
+2026-06-08 16:03:31.838 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 12.1726 ms
+2026-06-08 16:03:49.950 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+2026-06-08 16:03:49.951 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-08 16:03:49.951 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 8.8919 ms
+2026-06-08 16:07:51.073 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST / responded 404 in 0.2146 ms
+2026-06-08 16:08:02.057 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET / responded 404 in 0.1986 ms
+2026-06-08 17:11:32.337 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:11:32.347 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 17:11:32.347 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 17:11:32.386 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 17:11:32.387 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 39.4238ms with message 'null'
+2026-06-08 17:11:32.387 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 40.198ms
+2026-06-08 17:11:32.387 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 131.6027 ms
+2026-06-08 17:11:45.147 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:11:45.148 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 17:11:45.148 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 17:11:45.149 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 17:11:45.149 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 1.2769ms with message 'null'
+2026-06-08 17:11:45.150 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 1.67ms
+2026-06-08 17:11:45.150 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 2.5317 ms
+2026-06-08 17:11:50.691 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:11:50.691 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health checks
+2026-06-08 17:11:50.691 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Running health check db-communication-interne
+2026-06-08 17:11:50.693 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-08 17:11:50.693 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check db-communication-interne with status "Healthy" completed after 1.4752ms with message 'null'
+2026-06-08 17:11:50.693 +01:00 [DBG] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService Health check processing with combined status "Healthy" completed after 2.087ms
+2026-06-08 17:11:50.693 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /health responded 200 in 3.0643 ms
+2026-06-08 17:12:38.241 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:12:38.531 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /openapi/v1.json responded 200 in 289.7442 ms
+2026-06-08 17:13:55.671 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:13:55.677 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 401 in 6.5400 ms
+2026-06-08 17:14:35.163 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:14:35.163 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages/{id} responded 404 in 0.7023 ms
+2026-06-08 17:15:01.604 +01:00 [WRN]  JWT auth failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.X509SecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: 'W1gLcj0OsWQPpKWzYtvwbYav9Zs'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+Microsoft.IdentityModel.Tokens.RsaSecurityKey, KeyId: '5B580B723D0EB1640FA4A5B362DBF06D86AFF59B', InternalId: '5zAtbnTpjmUOlFnS2zc_XZQQn1-QmusG3N-gqWuxbA8'. , KeyId: 5B580B723D0EB1640FA4A5B362DBF06D86AFF59B
+'. Number of keys in TokenValidationParameters: '0'. 
+Number of keys in Configuration: '2'. 
+Exceptions caught:
+ '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-06-08 17:15:01.605 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP POST /api/messages responded 401 in 1.1539 ms
+2026-06-08 17:27:22.675 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+2026-06-08 17:27:22.677 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-08 17:27:22.691 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 62.7532 ms
+2026-06-08 17:27:53.080 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM communication_interne."Messages" AS m
+2026-06-08 17:27:53.081 +01:00 [INF] Microsoft.EntityFrameworkCore.Database.Command Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."AuteurId", m."Corps", m."DateCreation", m."DateDiffusion", m."DateProgrammee", m."DateValidation", m."EstArchive", m."EstInstitutionnel", m."MotiDeRejet", m."Objet", m."Statut", m."ValidateurId"
+FROM communication_interne."Messages" AS m
+ORDER BY m."DateCreation" DESC
+LIMIT @p1 OFFSET @p
+2026-06-08 17:27:53.082 +01:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware HTTP GET /api/messages responded 200 in 3.6254 ms
